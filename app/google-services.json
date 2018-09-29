@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "684931880070",
+    "firebase_url": "https://ad430project.firebaseio.com",
+    "project_id": "ad430project",
+    "storage_bucket": "ad430project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684931880070:android:0d857d449dfcd0d4",
+        "android_client_info": {
+          "package_name": "com.example.yhussein.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684931880070-vom1tlcidmn1ggsnin0vd1eju5nc2t1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDA5K-Um0In5F4UsAX088TfRgwkS_hfUM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
