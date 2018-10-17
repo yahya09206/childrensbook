@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">childrensbook</string>
+    <string name="book_title">book_title</string>
+    <string name="category">category</string>
+    <string name="description">description</string>
+    <string name="todo">TODO</string>
 </resources>

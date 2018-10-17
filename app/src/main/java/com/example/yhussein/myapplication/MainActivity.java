@@ -2,66 +2,35 @@ package com.example.yhussein.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.TabLayout;
-import android.widget.TextView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    List<Book> lstBook;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Adding Toolbar to Main screen
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Setting ViewPager for each Tabs
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        // Set Tabs inside Toolbar
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-    }
-    // Add Fragments to Tabs
-    private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeFragment(), "Home");
-        adapter.addFragment(new ReadFragment(), "Read");
-        adapter.addFragment(new LibraryFragment(), "Library");
-        viewPager.setAdapter(adapter);
-    }
 
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+        lstBook = new ArrayList<>();
+        lstBook.add(new Book("The Vegetarian","Categorie Book","Description book",R.drawable.thevegetarian));
+        lstBook.add(new Book("The Wild Robot","Categorie Book","Description book",R.drawable.thewildrobot));
+        lstBook.add(new Book("Maria Semples","Categorie Book","Description book",R.drawable.mariasemples));
+        lstBook.add(new Book("The Martian","Categorie Book","Description book",R.drawable.themartian));
+        lstBook.add(new Book("He Died with...","Categorie Book","Description book",R.drawable.hediedwith));
+        lstBook.add(new Book("Privacy","Categorie Book","Description book",R.drawable.privacy));
+        lstBook.add(new Book("The Best Laid Plans","Categorie Book","Description book",R.drawable.bestlaid));
+        lstBook.add(new Book("Quesadillas","Categorie Book","Description book",R.drawable.quesadillas));
+        lstBook.add(new Book("Origin","Categorie Book","Description book",R.drawable.origin));
 
-        public Adapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
+        RecyclerView myRecyclerview = (RecyclerView) findViewById(R.id.recyclerView_id);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,lstBook);
+        myRecyclerview.setLayoutManager(new GridLayoutManager(this,3));
+        myRecyclerview.setAdapter(myAdapter);
     }
 }
