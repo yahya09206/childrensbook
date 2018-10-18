@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.yhussein.myapplication.database.AppDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     List<Book> lstBook;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = AppDatabase.getInstance(this);
 
         lstBook = new ArrayList<>();
         lstBook.add(new Book("The Vegetarian","Categorie Book","Description book",R.drawable.thevegetarian));
@@ -32,5 +37,11 @@ public class MainActivity extends AppCompatActivity {
         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,lstBook);
         myRecyclerview.setLayoutManager(new GridLayoutManager(this,3));
         myRecyclerview.setAdapter(myAdapter);
+    }
+
+    @Override
+    protected void onDestroy(){
+        AppDatabase.destroyInstance();
+        super.onDestroy();
     }
 }
