@@ -42,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
             localRecords.add(new Setting(R.drawable.a, "Great Book Title 3", "Gerald Gate", "Gerald", "0", "Arabic", "Off", "3", "audio3.txt", "content3.txt", 0));
             localRecords.add(new Setting(R.drawable.b1, "Great Book Title 4", "Steve Paul", "Steve", "0", "Spanish", "Off", "4", "audio4.txt", "content4.txt", 0));
             localRecords.add(new Setting(R.drawable.a, "Great Book Title 5", "Kyle Smith", "Kyle", "0", "Chinese", "Off", "5", "audio5.txt", "content5.txt", 0));
+
+            Toast.makeText(this, localRecords.size() + " books locally loaded!!", Toast.LENGTH_LONG).show();
+
+            int count = 0;
+            for(int i = 0; i < localRecords.size(); i++) {
+                insertDatabase(localRecords.get(i));
+                count++;
+            }
+            Toast.makeText(this, count + " books inserted", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(this, "Welcome back! You have " + localRecords.size() + " books!", Toast.LENGTH_LONG).show();
         }
 
         RecyclerView myRecyclerview = (RecyclerView) findViewById(R.id.recyclerView_id);
@@ -85,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //insert
-    public void insertDatabase(View view, Setting setting) {
+    public void insertDatabase(Setting setting) {
         new InsertSettingTask(this, setting).execute();
     }
 

@@ -37,7 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.tv_book_title.setText(mData.get(position).getBookTitle());
-        holder.tv_book_author.setText(mData.get(position).getBookAuthor());
+        holder.tv_book_author.setText("by " + mData.get(position).getBookAuthor());
         holder.img_book_thumbnail.setImageResource(mData.get(position).getBookId());
         holder.actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
