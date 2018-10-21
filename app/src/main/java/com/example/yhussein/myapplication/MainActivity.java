@@ -37,17 +37,18 @@ public class MainActivity extends AppCompatActivity {
         localRecords = db.settingsDao().getAllBooks();
 
         if(localRecords.size() == 0) {
-            localRecords.add(new Setting(R.drawable.a, "Great Book Title 1", "Mekone Tolrom", "Mekone", "0", "English", "Off", "1", "audio1.txt", "content1.txt", 0));
-            localRecords.add(new Setting(R.drawable.b, "Great Book Title 2", "Yahya Hussein", "Yahya", "0", "French", "Off", "2", "audio2.txt", "content2.txt", 0));
-            localRecords.add(new Setting(R.drawable.a, "Great Book Title 3", "Gerald Gate", "Gerald", "0", "Arabic", "Off", "3", "audio3.txt", "content3.txt", 0));
-            localRecords.add(new Setting(R.drawable.b1, "Great Book Title 4", "Steve Paul", "Steve", "0", "Spanish", "Off", "4", "audio4.txt", "content4.txt", 0));
-            localRecords.add(new Setting(R.drawable.a, "Great Book Title 5", "Kyle Smith", "Kyle", "0", "Chinese", "Off", "5", "audio5.txt", "content5.txt", 0));
+            localRecords.add(new Setting(R.drawable.image1, "Great Book Title 1", "Mekone Tolrom", "Mekone", "0", "English", "Off", "1", "audio1.txt", "content1.txt", 0));
+            localRecords.add(new Setting(R.drawable.image2, "Great Book Title 2", "Yahya Hussein", "Yahya", "0", "French", "Off", "2", "audio2.txt", "content2.txt", 0));
+            localRecords.add(new Setting(R.drawable.image3, "Great Book Title 3", "Gerald Gate", "Gerald", "0", "Arabic", "Off", "3", "audio3.txt", "content3.txt", 0));
+            localRecords.add(new Setting(R.drawable.image4, "Great Book Title 4", "Steve Paul", "Steve", "0", "Spanish", "Off", "4", "audio4.txt", "content4.txt", 0));
+            localRecords.add(new Setting(R.drawable.image5, "Great Book Title 5", "Kyle Smith", "Kyle", "0", "Chinese", "Off", "5", "audio5.txt", "content5.txt", 0));
 
             Toast.makeText(this, localRecords.size() + " books locally loaded!!", Toast.LENGTH_LONG).show();
 
             int count = 0;
             for(int i = 0; i < localRecords.size(); i++) {
                 insertDatabase(localRecords.get(i));
+                //db.settingsDao().delete(localRecords.get(i));
                 count++;
             }
             Toast.makeText(this, count + " books inserted", Toast.LENGTH_LONG).show();

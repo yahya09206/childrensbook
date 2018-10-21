@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +37,7 @@ public class ReadActivity extends AppCompatActivity {
         tvcategory = (TextView) findViewById(R.id.txtCat);
         img = (ImageView) findViewById(R.id.bookthumbnail);
 
-        // Recieve data
+        // Receieve data
         Intent intent = getIntent();
         String Id = intent.getExtras().getString("Id");
         String Title = intent.getExtras().getString("Title");
@@ -52,6 +54,25 @@ public class ReadActivity extends AppCompatActivity {
         // Setting values
         tvtitle.setText(Title);
         img.setImageResource(image);
+
+
+        final ArrayList<String> st = new ArrayList<>(paragraphs);
+
+        final Button next = findViewById(R.id.next_button);
+        next.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                tvdescription.setText(st.get(2));
+            }
+        });
+
+        final Button prev = findViewById(R.id.previous_button);
+        prev.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                tvdescription.setText("Previous paragraph, yuk!");
+            }
+        });
     }
 
     public static List<String> getContent(Context context, String filePath)
