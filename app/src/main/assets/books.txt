@@ -1,5 +1,0 @@
-R.drawable.a,content1.txt,Great book title 1,John Smith,Me,0,English,Off,1,content1.txt,audio1.txt,0
-R.drawable.a1,content1.txt,Great book title 2,John Smith,Me,0,English,Off,2,content2.txt,audio2.txt,0
-R.drawable.b,content1.txt,Great book title 3,John Smith,Me,0,English,Off,3,content3.txt,audio3.txt,0
-R.drawable.b1,content1.txt,Great book title 4,John Smith,Me,0,English,Off,4,content4.txt,audio4.txt,0
-R.drawable.c,content1.txt,Great book title 5,John Smith,Me,0,English,Off,5,content5.txt,audio5.txt,0
