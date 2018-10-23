@@ -12,11 +12,7 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.*;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +22,8 @@ public class ReadActivity extends AppCompatActivity {
 
     private TextView tvtitle,tvdescription,tvcategory;
     private ImageView img;
+    private int bookmark;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +41,19 @@ public class ReadActivity extends AppCompatActivity {
         String Title = intent.getExtras().getString("Title");
         String Description = intent.getExtras().getString("Description");
         int image = intent.getExtras().getInt("Thumbnail");
+        bookmark = 0;
+        language = "English";
 
         //get book content
         List<String> paragraphs = new ArrayList<>();
         paragraphs = getContent(this.getApplicationContext(), "book" + Id + ".txt");
         if(paragraphs.size() > 0) {
-            tvdescription.setText(paragraphs.get(2));
+            tvdescription.setText(paragraphs.get(bookmark));
         }
 
         // Setting values
         tvtitle.setText(Title);
         img.setImageResource(image);
-
 
         final ArrayList<String> st = new ArrayList<>(paragraphs);
 
@@ -62,7 +61,11 @@ public class ReadActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                tvdescription.setText(st.get(2));
+                bookmark++;
+                if(bookmark > st.size() - 1){
+                    bookmark = st.size() - 1;
+                }
+                tvdescription.setText(st.get(bookmark));
             }
         });
 
@@ -70,7 +73,20 @@ public class ReadActivity extends AppCompatActivity {
         prev.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                tvdescription.setText("Previous paragraph, yuk!");
+                bookmark--;
+                if(bookmark < 0){
+                    bookmark = 0;
+                }
+                tvdescription.setText(st.get(bookmark));
+            }
+        });
+
+        final Button sett = findViewById(R.id.profile_button);
+        sett.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                Intent intent = new Intent(v.getContext(), ProfileActivity.class);
+                startActivity(intent);
             }
         });
     }

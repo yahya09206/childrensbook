@@ -68,10 +68,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDesc"
-                android:layout_toLeftOf="@id/previous_button"
+                android:layout_toRightOf="@id/previous_button"
                 style="?android:attr/borderlessButtonStyle"
                 android:textColor="?attr/colorPrimary"
                 android:text="Next" />
+
+            <Button
+                android:id="@+id/profile_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDesc"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/next_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="?attr/colorPrimary"
+                android:text="Settings" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
