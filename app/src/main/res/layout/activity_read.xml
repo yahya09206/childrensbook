@@ -65,14 +65,14 @@
                 android:textColor="?attr/colorPrimary"
                 android:text="Next" />
 
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/planets_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDesc"
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/next_button"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="?attr/colorPrimary" />-->
 
             <Button
                 android:id="@+id/profile_button"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDesc"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/planets_spinner"
+                android:layout_toRightOf="@id/next_button"
                 style="?android:attr/borderlessButtonStyle"
                 android:textColor="?attr/colorPrimary"
                 android:text="Settings" />

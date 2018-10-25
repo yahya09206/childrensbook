@@ -52,9 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // passing data to the book activity
                 intent.putExtra("Id", mData.get(position).getPhotoId());
                 intent.putExtra("Title", mData.get(position).getBookTitle());
-                //intent.putExtra("Author", mData.get(position).getBookAuthor());
-                //intent.putExtra("Description", mData.get(position).getContentUrl());
-                //intent.putExtra("Thumbnail", mData.get(position).getBookId());
+                intent.putExtra("Author", mData.get(position).getBookAuthor());
                 intent.putExtra("Bookmark", sRecords.get(0).getBookMark());
                 intent.putExtra("Language", sRecords.get(0).getReaderLanguage());
                 intent.putExtra("Sound", sRecords.get(0).getSoundStatus());

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         localRecords = db.settingsDao().getAllBooks();
         sRecords = db.statesDao().getAllStates();
-        if(localRecords.size() == 0) {
+        if(localRecords.size() == 0 && resetCount == 0) {
             localRecords.add(new Setting(R.drawable.image1, "Great Book Title 1", "Mekone Tolrom", "Mekone", "0", "0", "Off", "1", "audio1_english.mp3", "book1_english.txt", 0));
             //book 2
             //book 3
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             int count = 0;
             for(int i = 0; i < localRecords.size(); i++) {
                 insertDatabase(localRecords.get(i));
-                //db.settingsDao().delete(localRecords.get(i));
                 count++;
             }
             Toast.makeText(this, count + " books inserted", Toast.LENGTH_LONG).show();
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             s.setBookMark(0);
             s.setReaderIp("0.0.0.0");
             s.setReaderLanguage("english");
-            s.setSoundStatus("Off");
+            s.setSoundStatus("On");
             insertDatabase(s);
         }
 
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         if(resetCount == 1 && sRecords.size() > 0) {
             db.statesDao().delete(sRecords.get(0));
         }
-        //reset reocrds, delete all records
+        //reset records, delete all records
         if(resetCount == 1 && localRecords.size() > 0) {
             for (int i = 0; i < localRecords.size(); i++) {
                 db.settingsDao().delete(localRecords.get(i));
