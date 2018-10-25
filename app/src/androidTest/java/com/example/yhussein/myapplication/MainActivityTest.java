@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Root;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +60,8 @@ public class MainActivityTest {
 
     @Test
     public void testNavigateToReading() {
-        onView(withId(R.id.action_button)).perform(click());
+        onView(withId(R.id.recyclerView_id)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.action_button)));
         onView(withId(R.id.txttitle))
                 .check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
         onView(withId(R.id.txtCat))
@@ -117,7 +119,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testMatches() {
+    public void testCardViewDisplay() {
         onView(withIndex(withId(R.id.card_view), 0)).check(matches(isDisplayed()));
     }
 }
