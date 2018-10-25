@@ -19,14 +19,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="#2d2d2d"
-                android:id="@+id/bookthumbnail"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/todo" />
-
             <TextView
                 android:id="@+id/txttitle"
                 android:layout_width="wrap_content"
@@ -73,13 +65,22 @@
                 android:textColor="?attr/colorPrimary"
                 android:text="Next" />
 
+            <Spinner
+                android:id="@+id/planets_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDesc"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/next_button"
+                android:textColor="?attr/colorPrimary" />
+
             <Button
                 android:id="@+id/profile_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDesc"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/next_button"
+                android:layout_toRightOf="@id/planets_spinner"
                 style="?android:attr/borderlessButtonStyle"
                 android:textColor="?attr/colorPrimary"
                 android:text="Settings" />

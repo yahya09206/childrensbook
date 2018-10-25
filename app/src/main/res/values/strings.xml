@@ -19,4 +19,11 @@
     <string name="description">description</string>
     <string name="todo">TODO</string>
     <string name="matches_ryan_gosling">Ryan Gosling</string>
+    <string-array name="planets_array">
+        <item>English</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>Italian</item>
+        <item>Russian</item>
+    </string-array>
 </resources>

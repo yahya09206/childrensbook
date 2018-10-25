@@ -1,13 +1,18 @@
 package com.example.yhussein.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -24,6 +29,7 @@ public class ReadActivity extends AppCompatActivity {
     private ImageView img;
     private int bookmark;
     private String language;
+    private String sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,53 +39,79 @@ public class ReadActivity extends AppCompatActivity {
         tvtitle = (TextView) findViewById(R.id.txttitle);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
         tvcategory = (TextView) findViewById(R.id.txtCat);
-        img = (ImageView) findViewById(R.id.bookthumbnail);
+        //img = (ImageView) findViewById(R.id.bookthumbnail);
 
-        // Receieve data
+        Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.planets_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        //spinner = (Spinner) findViewById(R.id.planets_spinner);
+        //spinner.setOnItemSelectedListener(this.);
+
+        // Receive data
         Intent intent = getIntent();
         String Id = intent.getExtras().getString("Id");
         String Title = intent.getExtras().getString("Title");
-        String Description = intent.getExtras().getString("Description");
-        int image = intent.getExtras().getInt("Thumbnail");
-        bookmark = 0;
-        language = "English";
+        //String Description = intent.getExtras().getString("Description");
+        //int image = intent.getExtras().getInt("Thumbnail");
+        bookmark = intent.getExtras().getInt("Bookmark");
+        language = intent.getExtras().getString("Language");
+        sound = intent.getExtras().getString("Sound");
 
-        //get book content
-        List<String> paragraphs = new ArrayList<>();
-        paragraphs = getContent(this.getApplicationContext(), "book" + Id + ".txt");
-        if(paragraphs.size() > 0) {
-            tvdescription.setText(paragraphs.get(bookmark));
+        try {
+            //get book content
+            List<String> paragraphs = new ArrayList<>();
+            paragraphs = getContent(this.getApplicationContext(), "book" + Id + "_" + language + ".txt");
+            if (paragraphs.size() > 0) {
+                tvdescription.setText(paragraphs.get(bookmark));
+                tvcategory.setText("[" + bookmark + "/" + paragraphs.size() + "]");
+                if(language.equals("english")) {
+                    if(Id.equals("1")) {
+                        final MediaPlayer mp = MediaPlayer.create(this, R.raw.audio1_english);
+                        mp.start();
+                    }
+                }
+            }
+
+            // Setting values
+            tvtitle.setText(Title);
+            //img.setImageResource(image);
+
+            final ArrayList<String> st = new ArrayList<>(paragraphs);
+
+            final Button next = findViewById(R.id.next_button);
+            next.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    bookmark++;
+                    if (bookmark > st.size() - 1) {
+                        bookmark = st.size() - 1;
+                    }
+                    tvdescription.setText(st.get(bookmark));
+                    tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
+                }
+            });
+
+            final Button prev = findViewById(R.id.previous_button);
+            prev.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    bookmark--;
+                    if (bookmark < 0) {
+                        bookmark = 0;
+                    }
+                    tvdescription.setText("[" + bookmark + "/" + st.size() + "] " + st.get(bookmark));
+                    tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
+                }
+            });
+        }catch (Exception ex){
+            tvdescription.setText("State is corrupted, please reset!");
         }
-
-        // Setting values
-        tvtitle.setText(Title);
-        img.setImageResource(image);
-
-        final ArrayList<String> st = new ArrayList<>(paragraphs);
-
-        final Button next = findViewById(R.id.next_button);
-        next.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                bookmark++;
-                if(bookmark > st.size() - 1){
-                    bookmark = st.size() - 1;
-                }
-                tvdescription.setText(st.get(bookmark));
-            }
-        });
-
-        final Button prev = findViewById(R.id.previous_button);
-        prev.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                bookmark--;
-                if(bookmark < 0){
-                    bookmark = 0;
-                }
-                tvdescription.setText(st.get(bookmark));
-            }
-        });
 
         final Button sett = findViewById(R.id.profile_button);
         sett.setOnClickListener(new View.OnClickListener() {
@@ -120,5 +152,19 @@ public class ReadActivity extends AppCompatActivity {
         }
 
         return paragraphs;
+    }
+
+    public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
+    //...
+
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int pos, long id) {
+            // An item was selected. You can retrieve the selected item using
+            // parent.getItemAtPosition(pos)
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Another interface callback
+        }
     }
 }

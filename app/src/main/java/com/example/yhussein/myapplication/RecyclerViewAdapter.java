@@ -17,6 +17,8 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
     private Context mContext;
     private List<Setting> mData;
+    List<State> sRecords;
+    private AppDatabase db;
 
 
     public RecyclerViewAdapter(Context mContext, List<Setting> mData) {
@@ -35,6 +37,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        db = AppDatabase.getAppDatabase(mContext);
+        sRecords = db.statesDao().getAllStates();
 
         holder.tv_book_title.setText(mData.get(position).getBookTitle());
         holder.tv_book_author.setText("by " + mData.get(position).getBookAuthor());
@@ -48,9 +52,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // passing data to the book activity
                 intent.putExtra("Id", mData.get(position).getPhotoId());
                 intent.putExtra("Title", mData.get(position).getBookTitle());
-                intent.putExtra("Author", mData.get(position).getBookAuthor());
-                intent.putExtra("Description", mData.get(position).getContentUrl());
-                intent.putExtra("Thumbnail", mData.get(position).getBookId());
+                //intent.putExtra("Author", mData.get(position).getBookAuthor());
+                //intent.putExtra("Description", mData.get(position).getContentUrl());
+                //intent.putExtra("Thumbnail", mData.get(position).getBookId());
+                intent.putExtra("Bookmark", sRecords.get(0).getBookMark());
+                intent.putExtra("Language", sRecords.get(0).getReaderLanguage());
+                intent.putExtra("Sound", sRecords.get(0).getSoundStatus());
                 // start the activity
                 mContext.startActivity(intent);
             }
@@ -77,5 +84,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
             actionButton = itemView.findViewById(R.id.action_button);
         }
+    }
+
+    //get
+    private static List<State> loadAllStates(final AppDatabase db) {
+        List<State> states = db.statesDao().getAllStates();
+        return states;
     }
 }
