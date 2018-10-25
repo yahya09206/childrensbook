@@ -59,7 +59,7 @@ public class MainActivityTest {
 
     @Test
     public void testNavigateToReading() {
-        onView(withIndex(withId(R.id.action_button), 0)).perform(click());
+        onView(withId(R.id.action_button)).perform(click());
         onView(withId(R.id.txttitle))
                 .check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
         onView(withId(R.id.txtCat))
@@ -72,7 +72,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testImageDisplay() {
+    public void testSoundDisplay() {
         //onView(withId(R.id.book_img_id))
         //.check(matches(withDrawable(R.drawable.image1)));
     }
