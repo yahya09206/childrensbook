@@ -58,8 +58,8 @@ public class MainActivityTest {
                 .check(matches(withText("by Mekone Tolrom")));
     }
 
-    @Test
-    public void testNavigateToReading() {
+    //@Test
+    /*public void testNavigateToReading() {
         onView(withId(R.id.recyclerView_id)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.action_button)));
         onView(withId(R.id.txttitle))
@@ -71,7 +71,7 @@ public class MainActivityTest {
         onView(withIndex(withId(R.id.next_button), 0)).perform(click());
         onView(withIndex(withId(R.id.previous_button), 0)).perform(click());
         onView(withIndex(withId(R.id.profile_button), 0)).perform(click());
-    }
+    }*/
 
     @Test
     public void testSoundDisplay() {
