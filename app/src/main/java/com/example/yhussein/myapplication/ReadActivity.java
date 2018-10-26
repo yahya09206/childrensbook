@@ -145,7 +145,8 @@ public class ReadActivity extends AppCompatActivity {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    //log the exception
+                    //get error message string
+                    String msg = e.toString();
                 }
             }
         }
