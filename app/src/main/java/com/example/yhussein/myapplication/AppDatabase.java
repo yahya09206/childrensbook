@@ -6,12 +6,12 @@ import android.content.Context;
 import android.arch.persistence.room.Room;
 
 
-@Database(entities = {Setting.class}, version = 4, exportSchema = false)
-
+@Database(entities = {Setting.class, State.class}, version = 5, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
     public abstract SettingsDao settingsDao();
+    public abstract StatesDao statesDao();
 
     public static AppDatabase getAppDatabase(Context context) {
 

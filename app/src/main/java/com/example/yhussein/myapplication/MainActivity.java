@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
@@ -27,34 +28,57 @@ import static java.security.AccessController.getContext;
 public class MainActivity extends AppCompatActivity {
 
     List<Setting> localRecords;
+    List<State> sRecords;
     private AppDatabase db;
+    private int resetCount = 0; //1 = delete all, 0 = keep old data
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = AppDatabase.getAppDatabase(this.getApplicationContext());
-        localRecords = db.settingsDao().getAllBooks();
 
-        if(localRecords.size() == 0) {
-            localRecords.add(new Setting(R.drawable.image1, "Great Book Title 1", "Mekone Tolrom", "Mekone", "0", "English", "Off", "1", "audio1.txt", "content1.txt", 0));
-            localRecords.add(new Setting(R.drawable.image2, "Great Book Title 2", "Yahya Hussein", "Yahya", "0", "French", "Off", "2", "audio2.txt", "content2.txt", 0));
-            localRecords.add(new Setting(R.drawable.image3, "Great Book Title 3", "Gerald Gate", "Gerald", "0", "Arabic", "Off", "3", "audio3.txt", "content3.txt", 0));
-            localRecords.add(new Setting(R.drawable.image4, "Great Book Title 4", "Steve Paul", "Steve", "0", "Spanish", "Off", "4", "audio4.txt", "content4.txt", 0));
-            localRecords.add(new Setting(R.drawable.image5, "Great Book Title 5", "Kyle Smith", "Kyle", "0", "Chinese", "Off", "5", "audio5.txt", "content5.txt", 0));
+        localRecords = db.settingsDao().getAllBooks();
+        sRecords = db.statesDao().getAllStates();
+        if(localRecords.size() == 0 && resetCount == 0) {
+            localRecords.add(new Setting(R.drawable.image1, "Great Book Title 1", "Mekone Tolrom", "Mekone", "0", "0", "Off", "1", "audio1_english.mp3", "book1_english.txt", 0));
+            //book 2
+            //book 3
+            //book 4
+            //book 5
 
             Toast.makeText(this, localRecords.size() + " books locally loaded!!", Toast.LENGTH_LONG).show();
 
             int count = 0;
             for(int i = 0; i < localRecords.size(); i++) {
                 insertDatabase(localRecords.get(i));
-                //db.settingsDao().delete(localRecords.get(i));
                 count++;
             }
             Toast.makeText(this, count + " books inserted", Toast.LENGTH_LONG).show();
         }
-        else{
+        else {
             Toast.makeText(this, "Welcome back! You have " + localRecords.size() + " books!", Toast.LENGTH_LONG).show();
+        }
+        //create state
+        if(sRecords.size() == 0) {
+            State s = new State();
+            s.setStateId(1);
+            s.setBookMark(0);
+            s.setReaderIp("0.0.0.0");
+            s.setReaderLanguage("english");
+            s.setSoundStatus("On");
+            insertDatabase(s);
+        }
+
+        //reset state, delete state
+        if(resetCount == 1 && sRecords.size() > 0) {
+            db.statesDao().delete(sRecords.get(0));
+        }
+        //reset records, delete all records
+        if(resetCount == 1 && localRecords.size() > 0) {
+            for (int i = 0; i < localRecords.size(); i++) {
+                db.settingsDao().delete(localRecords.get(i));
+            }
         }
 
         RecyclerView myRecyclerview = (RecyclerView) findViewById(R.id.recyclerView_id);
@@ -159,16 +183,100 @@ public class MainActivity extends AppCompatActivity {
             if(setting == null || activity == null) {
                 return;
             }
+        }
+    }
 
-            //edit_email.setText(setting.getEmail());
-            //edit_dailyReminder.setText(setting.getDailyReminder());
-            //edit_minDistance.setText(setting.getMinDistance());
-            //edit_maxDistance.setText(setting.getMaxDistance());
-            //edit_maleFemale.setText(setting.getMaleFemale());
-            //edit_accountStatus.setText(setting.getAccountStatus());
-            //edit_minAge.setText(setting.getMinAge());
-            //edit_maxAge.setText(setting.getMaxAge());
-            //edit_photoUrl.setText(setting.getPhotoUrl());
+    /****************STATE**********************/
+    //update
+    public void updateDatabase(View view, State state) {
+        new UpdateStateTask(this, state).execute();
+    }
+
+    private static class UpdateStateTask extends AsyncTask<Void, Void, State> {
+
+        private WeakReference<Activity> weakActivity;
+        private State state;
+
+        public UpdateStateTask(Activity activity, State state) {
+            weakActivity = new WeakReference<>(activity);
+            this.state = state;
+        }
+
+        @Override
+        protected State doInBackground(Void... voids) {
+            Activity activity = weakActivity.get();
+            if (activity == null) {
+                return null;
+            }
+
+            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
+            db.statesDao().updateStates(state);
+            return state;
+        }
+    }
+
+    //insert
+    public void insertDatabase(State state) {
+        new InsertStateTask(this, state).execute();
+    }
+
+    private static class InsertStateTask extends AsyncTask<Void, Void, State> {
+
+        private WeakReference<Activity> weakActivity;
+        private State state;
+
+        public InsertStateTask(Activity activity, State state) {
+            weakActivity = new WeakReference<>(activity);
+            this.state = state;
+        }
+
+        @Override
+        protected State doInBackground(Void... voids) {
+            Activity activity = weakActivity.get();
+            if (activity == null) {
+                return null;
+            }
+
+            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
+            db.statesDao().insertAll(state);
+            return state;
+        }
+    }
+
+    //get
+    private static List<State> loadAllStates(final AppDatabase db) {
+        List<State> states = db.statesDao().getAllStates();
+        return states;
+    }
+
+    private static class GetStateTask extends AsyncTask<Void, Void, State> {
+
+        private WeakReference<Activity> weakActivity;
+
+        public GetStateTask(Activity activity) {
+            weakActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected State doInBackground(Void... voids) {
+            Activity activity = weakActivity.get();
+            if (activity == null) {
+                return null;
+            }
+
+            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
+            List<State> states = db.statesDao().getAllStates();
+            if (states.size() <= 0 || states.get(0) == null) {
+                return null;
+            }
+            return states.get(0);
+        }
+        @Override
+        protected void onPostExecute(State state) {
+            MainActivity activity = (MainActivity) weakActivity.get();
+            if(state == null || activity == null) {
+                return;
+            }
         }
     }
 }
