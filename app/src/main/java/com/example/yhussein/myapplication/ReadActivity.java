@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,9 @@ public class ReadActivity extends AppCompatActivity {
 
     private TextView tvtitle,tvdescription,tvcategory;
     private ImageView img;
+    private String id;
     private int bookmark;
+    private int section;
     private String language;
     private String sound;
 
@@ -54,35 +57,31 @@ public class ReadActivity extends AppCompatActivity {
 
         // Receive data
         Intent intent = getIntent();
-        String Id = intent.getExtras().getString("Id");
+        id = intent.getExtras().getString("Id");
         String Title = intent.getExtras().getString("Title");
         String Author = intent.getExtras().getString("Author");
         bookmark = intent.getExtras().getInt("Bookmark");
         language = intent.getExtras().getString("Language");
         sound = intent.getExtras().getString("Sound");
+        section = bookmark + 1;
 
         try {
             //get book content
             List<String> paragraphs = new ArrayList<>();
-            paragraphs = getContent(this.getApplicationContext(), "book" + Id + "_" + language + ".txt");
+            paragraphs = getContent(this.getApplicationContext(), "book" + id + "_" + language + ".txt");
             if (paragraphs.size() > 0) {
                 tvdescription.setText(paragraphs.get(bookmark));
                 tvcategory.setText("[" + bookmark + "/" + paragraphs.size() + "]");
-                if(sound.equals("On")) {
-                    if (language.equals("english")) {
-                        if (Id.equals("1")) {
-                            final MediaPlayer mp = MediaPlayer.create(this, R.raw.audio1_english);
-                            mp.start();
-                        }
-                    }
-                }
             }
 
             // Setting values
             tvtitle.setText(Title + " by " + Author);
 
+            String soundF = "audio" + id + "_" + section + "_" + language;
+            Resources res = this.getApplicationContext().getResources();
+            final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
+            //playSound(mediaPlayer, soundId);
             final ArrayList<String> st = new ArrayList<>(paragraphs);
-
             final Button next = findViewById(R.id.next_button);
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -91,8 +90,16 @@ public class ReadActivity extends AppCompatActivity {
                     if (bookmark > st.size() - 1) {
                         bookmark = st.size() - 1;
                     }
+                    section++;
+                    if (section > st.size() - 1) {
+                        section = st.size() - 1;
+                    }
                     tvdescription.setText(st.get(bookmark));
                     tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
+                    if(sound.equals("On")) {
+                        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+                        mp.start();
+                    }
                 }
             });
 
@@ -104,8 +111,16 @@ public class ReadActivity extends AppCompatActivity {
                     if (bookmark < 0) {
                         bookmark = 0;
                     }
+                    section--;
+                    if (section < 0) {
+                        section = 0;
+                    }
                     tvdescription.setText("[" + bookmark + "/" + st.size() + "] " + st.get(bookmark));
                     tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
+                    if(sound.equals("On")) {
+                        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+                        mp.start();
+                    }
                 }
             });
         }catch (Exception ex){
