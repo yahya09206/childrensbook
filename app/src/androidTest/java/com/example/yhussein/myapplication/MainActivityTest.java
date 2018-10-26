@@ -50,8 +50,6 @@ public class MainActivityTest {
 
     @Test
     public void testInfoDisplay() {
-        onView(withId(R.id.action_button))
-                .check(matches(withText("Read")));
         onView(withId(R.id.book_title_id))
                 .check(matches(withText("Great Book Title 1")));
         onView(withId(R.id.book_author_id))
