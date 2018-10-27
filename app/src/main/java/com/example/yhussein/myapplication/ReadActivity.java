@@ -92,10 +92,6 @@ public class ReadActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
                     //final MediaPlayer mp2 = MediaPlayer.create(getApplicationContext(), soundId);
-                    if (mp != null && mp.isPlaying())
-                    {
-                        mp.stop();
-                    }
                     bookmark++;
                     if (bookmark > st.size() - 1) {
                         bookmark = st.size() - 1;
