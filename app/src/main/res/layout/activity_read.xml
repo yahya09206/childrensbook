@@ -1,78 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yhussein.myapplication.ReadActivity"
-    android:background="#fcfcfc">
+    android:background="#fcfcfc"
+    tools:context="com.example.yhussein.myapplication.ReadActivity">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/txttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/book_title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Book Title" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="#2d2d2d"
-                android:id="@+id/bookthumbnail"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/todo" />
+    <TextView
+        android:id="@+id/txtCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#edecec"
+        android:padding="8dp"
+        android:text="@string/category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.085" />
 
-            <TextView
-                android:id="@+id/txttitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/book_title"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="Book Title" />
+    <TextView
+        android:id="@+id/txtDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/description"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.178" />
 
-            <TextView
-                android:id="@+id/txtCat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category"
-                android:background="#edecec"
-                android:padding="8dp"
-                android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/previous_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:drawableTop="@drawable/ic_skip_previous_black_24dp"
+        android:text="@string/previous"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.984" />
 
-            <TextView
-                android:id="@+id/txtDesc"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/description"/>
+    <Button
+        android:id="@+id/next_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_skip_next_black_24dp"
+        android:text="@string/next"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/profile_button"
+        app:layout_constraintTop_toTopOf="@+id/profile_button" />
 
-            <Button
-                android:id="@+id/previous_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtDesc"
-                style="?android:attr/borderlessButtonStyle"
-                android:textColor="?attr/colorPrimary"
-                android:text="Previous" />
+    <!--<Spinner
+        android:id="@+id/planets_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtDesc"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/next_button"
+        android:textColor="?attr/colorPrimary" />-->
 
-            <Button
-                android:id="@+id/next_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtDesc"
-                android:layout_toLeftOf="@id/previous_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:textColor="?attr/colorPrimary"
-                android:text="Next" />
+    <Button
+        android:id="@+id/profile_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_settings_black_24dp"
+        android:text="@string/settings"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/next_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/previous_button"
+        app:layout_constraintTop_toTopOf="@+id/previous_button" />
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
