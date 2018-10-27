@@ -65,12 +65,14 @@ public class ReadActivity extends AppCompatActivity {
         sound = intent.getExtras().getString("Sound");
         section = bookmark + 1;
 
+        String intro = "***** START READ OR LISTEN ******";
+
         try {
             //get book content
             List<String> paragraphs = new ArrayList<>();
             paragraphs = getContent(this.getApplicationContext(), "book" + id + "_" + language + ".txt");
             if (paragraphs.size() > 0) {
-                tvdescription.setText(paragraphs.get(bookmark));
+                tvdescription.setText(intro);
                 tvcategory.setText("[" + bookmark + "/" + paragraphs.size() + "]");
             }
 
@@ -78,14 +80,22 @@ public class ReadActivity extends AppCompatActivity {
             tvtitle.setText(Title + " by " + Author);
 
             String soundF = "audio" + id + "_" + section + "_" + language;
+            //int prevSection = section - 1;
+            //final String prevSound = "audio" + id + "_" + prevSection + "_" + language;
             Resources res = this.getApplicationContext().getResources();
+            //final int pSoundId = res.getIdentifier(prevSound, "raw", getApplicationContext().getPackageName());
             final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
-            //playSound(mediaPlayer, soundId);
+            final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
             final ArrayList<String> st = new ArrayList<>(paragraphs);
             final Button next = findViewById(R.id.next_button);
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
+                    //final MediaPlayer mp2 = MediaPlayer.create(getApplicationContext(), soundId);
+                    if (mp != null && mp.isPlaying())
+                    {
+                        mp.stop();
+                    }
                     bookmark++;
                     if (bookmark > st.size() - 1) {
                         bookmark = st.size() - 1;
@@ -97,7 +107,11 @@ public class ReadActivity extends AppCompatActivity {
                     tvdescription.setText(st.get(bookmark));
                     tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
                     if(sound.equals("On")) {
-                        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+                        /*if(section > 3){
+                            final MediaPlayer mp1 = MediaPlayer.create(getApplicationContext(), pSoundId);
+                            mp1.stop();
+                        }*/
+                        //final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
                         mp.start();
                     }
                 }
