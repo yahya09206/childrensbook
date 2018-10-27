@@ -92,15 +92,6 @@
         app:layout_constraintStart_toEndOf="@+id/profile_button"
         app:layout_constraintTop_toTopOf="@+id/profile_button" />
 
-    <!--<Spinner
-        android:id="@+id/planets_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtDesc"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/next_button"
-        android:textColor="?attr/colorPrimary" />-->
-
     <Button
         android:id="@+id/profile_button"
         style="?android:attr/borderlessButtonStyle"
