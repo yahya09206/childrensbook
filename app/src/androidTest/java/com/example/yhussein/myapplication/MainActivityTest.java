@@ -33,6 +33,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.yhussein.myapplication.MyViewAction.clickChildViewWithId;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -58,24 +59,23 @@ public class MainActivityTest {
 
     //@Test
     /*public void testNavigateToReading() {
-        onView(withId(R.id.recyclerView_id)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.action_button)));
+        //onView(withId(R.id.recyclerView_id)).perform(
+                //RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction
+                        //.clickChildViewWithId(R.id.book_img_id)));
+        onView(withId(R.id.recyclerView_id))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
         onView(withId(R.id.txttitle))
                 .check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
         onView(withId(R.id.txtCat))
                 .check(matches(withText("[0/26]")));
         onView(withId(R.id.txtDesc))
-                .check(matches(withText("")));
+                .check(matches(withText("***** START READ OR LISTEN ******")));
         onView(withIndex(withId(R.id.next_button), 0)).perform(click());
-        onView(withIndex(withId(R.id.previous_button), 0)).perform(click());
+        //test paragraph is not null
+        //test sound is playing
         onView(withIndex(withId(R.id.profile_button), 0)).perform(click());
     }*/
-
-    @Test
-    public void testSoundDisplay() {
-        //onView(withId(R.id.book_img_id))
-        //.check(matches(withDrawable(R.drawable.image1)));
-    }
 
     @Test
     public void testCardViewDisplay() {

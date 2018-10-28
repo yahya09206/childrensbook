@@ -81,19 +81,13 @@ public class ReadActivity extends AppCompatActivity {
             tvtitle.setText(Title + " by " + Author);
 
             String soundF = "audio" + id + "_" + section + "_" + language;
-            //int prevSection = section - 1;
-            //final String prevSound = "audio" + id + "_" + prevSection + "_" + language;
             Resources res = this.getApplicationContext().getResources();
-            //final int pSoundId = res.getIdentifier(prevSound, "raw", getApplicationContext().getPackageName());
             final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
-            //final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
             final ArrayList<String> st = new ArrayList<>(paragraphs);
             final Button next = findViewById(R.id.next_button);
             final Button prev = findViewById(R.id.previous_button);
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    // Code here executes on main thread after user presses button
-                    //final MediaPlayer mp2 = MediaPlayer.create(getApplicationContext(), soundId);
                     bookmark++;
                     if (bookmark > st.size() - 1) {
                         bookmark = st.size() - 1;
