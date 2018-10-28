@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -85,9 +86,10 @@ public class ReadActivity extends AppCompatActivity {
             Resources res = this.getApplicationContext().getResources();
             //final int pSoundId = res.getIdentifier(prevSound, "raw", getApplicationContext().getPackageName());
             final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
-            final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+            //final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
             final ArrayList<String> st = new ArrayList<>(paragraphs);
             final Button next = findViewById(R.id.next_button);
+            final Button prev = findViewById(R.id.previous_button);
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
@@ -102,18 +104,28 @@ public class ReadActivity extends AppCompatActivity {
                     }
                     tvdescription.setText(st.get(bookmark));
                     tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
+                    final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
                     if(sound.equals("On")) {
-                        /*if(section > 3){
-                            final MediaPlayer mp1 = MediaPlayer.create(getApplicationContext(), pSoundId);
-                            mp1.stop();
-                        }*/
-                        //final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+
                         mp.start();
+                        next.setEnabled(false);
+                        next.setTextColor(getResources().getColor(R.color.colorAccent));
+                        prev.setEnabled(false);
+                        prev.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
+                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        public void onCompletion(MediaPlayer mp) {
+                            finish(); // finish current activity
+                            Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
+                            next.setEnabled(true);
+                            next.setTextColor(getResources().getColor(R.color.colorPrimary));
+                            prev.setEnabled(true);
+                            prev.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        }
+                    });
                 }
             });
 
-            final Button prev = findViewById(R.id.previous_button);
             prev.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
@@ -127,14 +139,28 @@ public class ReadActivity extends AppCompatActivity {
                     }
                     tvdescription.setText("[" + bookmark + "/" + st.size() + "] " + st.get(bookmark));
                     tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
+                    final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
                     if(sound.equals("On")) {
-                        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
                         mp.start();
+                        prev.setEnabled(false);
+                        prev.setTextColor(getResources().getColor(R.color.colorAccent));
+                        next.setEnabled(false);
+                        next.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
+                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        public void onCompletion(MediaPlayer mp) {
+                            finish(); // finish current activity
+                            Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
+                            next.setEnabled(true);
+                            next.setTextColor(getResources().getColor(R.color.colorPrimary));
+                            prev.setEnabled(true);
+                            prev.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        }
+                    });
                 }
             });
         }catch (Exception ex){
-            tvdescription.setText("State is corrupted, please reset!");
+            Toast.makeText(getApplicationContext(), "State is corrupted, please reset!", Toast.LENGTH_SHORT).show();
         }
 
         final Button sett = findViewById(R.id.profile_button);

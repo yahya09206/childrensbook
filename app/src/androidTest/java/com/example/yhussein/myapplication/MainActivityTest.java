@@ -77,6 +77,11 @@ public class MainActivityTest {
         //.check(matches(withDrawable(R.drawable.image1)));
     }
 
+    @Test
+    public void testCardViewDisplay() {
+        onView(withIndex(withId(R.id.card_view), 0)).check(matches(isDisplayed()));
+    }
+
     public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
         return new TypeSafeMatcher<View>() {
             int currentIndex = 0;
@@ -114,10 +119,5 @@ public class MainActivityTest {
             }
             return false;
         }
-    }
-
-    @Test
-    public void testCardViewDisplay() {
-        onView(withIndex(withId(R.id.card_view), 0)).check(matches(isDisplayed()));
     }
 }
