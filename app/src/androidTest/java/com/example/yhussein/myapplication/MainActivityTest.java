@@ -58,18 +58,17 @@ public class MainActivityTest {
 
     @Test
     public void testNavigateToReading() {
-        onView(withId(R.id.card_view)).perform(
+        onView(withId(R.id.recyclerView_id)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction
                         .clickChildViewWithId(R.id.book_img_id)));
-        /*onView(withId(R.id.txttitle))
+        onView(withId(R.id.txttitle))
                 .check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
         onView(withId(R.id.txtCat))
                 .check(matches(withText("[0/26]")));
         onView(withId(R.id.txtDesc))
                 .check(matches(withText("***** START READ OR LISTEN ******")));
         onView(withIndex(withId(R.id.next_button), 0)).perform(click());
-        //onView(withIndex(withId(R.id.previous_button), 0)).perform(click());
-        onView(withIndex(withId(R.id.profile_button), 0)).perform(click());*/
+        onView(withIndex(withId(R.id.profile_button), 0)).perform(click());
     }
 
     @Test
