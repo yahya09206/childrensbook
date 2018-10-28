@@ -32,7 +32,7 @@ public class RecyclerViewAdapterTest {
         onView(withId(R.id.txttitle))
                 .check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
         onView(withId(R.id.txtCat))
-                .check(matches(withText("[0/26]")));
+                .check(matches(withText("category")));
         onView(withId(R.id.txtDesc))
                 .check(matches(withText("***** START READ OR LISTEN ******")));
         onView(withIndex(withId(R.id.next_button), 0)).perform(click());
