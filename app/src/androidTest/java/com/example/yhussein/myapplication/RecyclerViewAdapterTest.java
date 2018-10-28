@@ -35,6 +35,6 @@ public class RecyclerViewAdapterTest {
         onView(withIndex(withId(R.id.next_button), 0)).perform(click());
         //test paragraph is not null
         //test sound is playing
-        onView(withIndex(withId(R.id.profile_button), 0)).perform(click());
+        //onView(withIndex(withId(R.id.profile_button), 0)).perform(click());
     }
 }
