@@ -60,7 +60,7 @@ public class MainActivityTest {
     public void testNavigateToReading() {
         onView(withId(R.id.recyclerView_id)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction
-                        .clickChildViewWithId(R.id.action_button)));
+                        .clickChildViewWithId(R.id.book_img_id)));
         onView(withId(R.id.txttitle))
                 .check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
         onView(withId(R.id.txtCat))
