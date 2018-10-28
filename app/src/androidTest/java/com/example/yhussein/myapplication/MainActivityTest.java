@@ -58,7 +58,7 @@ public class MainActivityTest {
 
     @Test
     public void testNavigateToReading() {
-        onView(withId(R.id.recyclerView_id)).perform(
+        onView(withId(R.id.card_view)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction
                         .clickChildViewWithId(R.id.book_img_id)));
         onView(withId(R.id.txttitle))
