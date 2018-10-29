@@ -43,23 +43,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tv_book_title.setText(mData.get(position).getBookTitle());
         holder.tv_book_author.setText("by " + mData.get(position).getBookAuthor());
         holder.img_book_thumbnail.setImageResource(mData.get(position).getBookId());
-        holder.actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext, ReadActivity.class);
-
-                // passing data to the book activity
-                intent.putExtra("Id", mData.get(position).getPhotoId());
-                intent.putExtra("Title", mData.get(position).getBookTitle());
-                intent.putExtra("Author", mData.get(position).getBookAuthor());
-                intent.putExtra("Bookmark", sRecords.get(0).getBookMark());
-                intent.putExtra("Language", sRecords.get(0).getReaderLanguage());
-                intent.putExtra("Sound", sRecords.get(0).getSoundStatus());
-                // start the activity
-                mContext.startActivity(intent);
-            }
-        });
 
         holder.img_book_thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 // passing data to the book activity
                 intent.putExtra("Id", mData.get(position).getPhotoId());
-                intent.putExtra("Title", mData.get(position).getBookTitle());
-                intent.putExtra("Author", mData.get(position).getBookAuthor());
+                intent.putExtra("Thumbnail", mData.get(position).getBookId());
                 intent.putExtra("Bookmark", sRecords.get(0).getBookMark());
                 intent.putExtra("Language", sRecords.get(0).getReaderLanguage());
                 intent.putExtra("Sound", sRecords.get(0).getSoundStatus());
@@ -90,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tv_book_title;
         TextView tv_book_author;
         ImageView img_book_thumbnail;
-        Button actionButton;
+        //Button actionButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -98,7 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_book_title = (TextView) itemView.findViewById(R.id.book_title_id);
             tv_book_author = (TextView) itemView.findViewById(R.id.book_author_id);
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
-            actionButton = itemView.findViewById(R.id.action_button);
+            //actionButton = itemView.findViewById(R.id.action_button);
         }
     }
 
