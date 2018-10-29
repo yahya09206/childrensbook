@@ -38,9 +38,8 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_settings_black_24dp"
-                    android:text="Play"
+                    android:drawableTop="@drawable/ic_play_arrow_black_24dp"
+                    android:text="@string/play"
                     android:textColor="?attr/colorPrimary" />
 
                 <Button
@@ -48,9 +47,8 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_settings_black_24dp"
-                    android:text="Lang"
+                    android:drawableTop="@drawable/ic_language_black_24dp"
+                    android:text="@string/lang"
                     android:textColor="?attr/colorPrimary" />
 
                 <Button
@@ -58,9 +56,8 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_settings_black_24dp"
-                    android:text="close"
+                    android:drawableTop="@drawable/ic_close_black_24dp"
+                    android:text="@string/close"
                     android:textColor="?attr/colorPrimary" />
             </LinearLayout>
 
