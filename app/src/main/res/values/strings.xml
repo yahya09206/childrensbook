@@ -92,4 +92,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="choose_language">Choose Language</string>
     <string name="audio_on_off">Audio: On/Off</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
