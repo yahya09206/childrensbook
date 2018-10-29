@@ -8,10 +8,12 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,22 +29,23 @@ import java.util.List;
 
 public class ReadActivity extends AppCompatActivity {
 
-    private TextView tvtitle,tvdescription,tvcategory;
+    private TextView tvdescription;
     private ImageView img;
     private String id;
     private int bookmark;
     private int section;
     private String language;
     private String sound;
+    String soundF;
+    String pix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
-        tvtitle = (TextView) findViewById(R.id.txttitle);
+        img = (ImageView) findViewById(R.id.book_img_id);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
-        tvcategory = (TextView) findViewById(R.id.txtCat);
 
         //Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -59,14 +62,11 @@ public class ReadActivity extends AppCompatActivity {
         // Receive data
         Intent intent = getIntent();
         id = intent.getExtras().getString("Id");
-        String Title = intent.getExtras().getString("Title");
-        String Author = intent.getExtras().getString("Author");
+        int image = intent.getExtras().getInt("Thumbnail");
         bookmark = intent.getExtras().getInt("Bookmark");
         language = intent.getExtras().getString("Language");
         sound = intent.getExtras().getString("Sound");
         section = bookmark + 1;
-
-        String intro = "***** START READ OR LISTEN ******";
 
         try {
             //get book content
@@ -74,19 +74,39 @@ public class ReadActivity extends AppCompatActivity {
             paragraphs = getContent(this.getApplicationContext(), "book" + id + "_" + language + ".txt");
             if (paragraphs.size() > 0) {
                 // Setting values
-                tvtitle.setText(Title + " by " + Author);
-                tvdescription.setText(intro);
-                tvcategory.setText("[" + bookmark + "/" + paragraphs.size() + "]");
+                img.setImageResource(image);
+                tvdescription.setText(paragraphs.get(bookmark + 1));
             }
 
             String soundF = "audio" + id + "_" + section + "_" + language;
+            String pix = "image" + id + "_" + section;
             Resources res = this.getApplicationContext().getResources();
+            final int pixId = res.getIdentifier(pix, "drawable", getApplicationContext().getPackageName());
             final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
             final ArrayList<String> st = new ArrayList<>(paragraphs);
-            final Button next = findViewById(R.id.next_button);
-            final Button prev = findViewById(R.id.previous_button);
-            next.setOnClickListener(new View.OnClickListener() {
+
+            final ImageView imgButton = (ImageView) findViewById(R.id.book_img_id);
+
+            final Button play = findViewById(R.id.play);
+            final Button lang = findViewById(R.id.lang);
+            final Button close = findViewById(R.id.close);
+
+            play.setVisibility(View.GONE);
+            lang.setVisibility(View.GONE);
+            close.setVisibility(View.GONE);
+            imgButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    play.setVisibility(View.VISIBLE);
+                    lang.setVisibility(View.VISIBLE);
+                    close.setVisibility(View.VISIBLE);
+                }
+            });
+
+            play.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    play.setVisibility(View.GONE);
+                    lang.setVisibility(View.GONE);
+                    close.setVisibility(View.GONE);
                     bookmark++;
                     if (bookmark > st.size() - 1) {
                         bookmark = st.size() - 1;
@@ -95,75 +115,49 @@ public class ReadActivity extends AppCompatActivity {
                     if (section > st.size() - 1) {
                         section = st.size() - 1;
                     }
+                    img.setImageResource(pixId);
                     tvdescription.setText(st.get(bookmark));
-                    tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
                     final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
-                    if(sound.equals("On")) {
-
-                        mp.start();
-                        next.setEnabled(false);
-                        next.setTextColor(getResources().getColor(R.color.colorAccent));
-                        prev.setEnabled(false);
-                        prev.setTextColor(getResources().getColor(R.color.colorAccent));
-                    }
+                    mp.start();
                     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         public void onCompletion(MediaPlayer mp) {
                             finish(); // finish current activity
                             Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
-                            next.setEnabled(true);
-                            next.setTextColor(getResources().getColor(R.color.colorPrimary));
-                            prev.setEnabled(true);
-                            prev.setTextColor(getResources().getColor(R.color.colorPrimary));
                         }
                     });
                 }
             });
 
-            prev.setOnClickListener(new View.OnClickListener() {
+            close.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    bookmark--;
-                    if (bookmark < 0) {
-                        bookmark = 0;
-                    }
-                    section--;
-                    if (section < 0) {
-                        section = 0;
-                    }
-                    tvdescription.setText("[" + bookmark + "/" + st.size() + "] " + st.get(bookmark));
-                    tvcategory.setText("[" + bookmark + "/" + st.size() + "]");
-                    final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
-                    if(sound.equals("On")) {
-                        mp.start();
-                        prev.setEnabled(false);
-                        prev.setTextColor(getResources().getColor(R.color.colorAccent));
-                        next.setEnabled(false);
-                        next.setTextColor(getResources().getColor(R.color.colorAccent));
-                    }
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        public void onCompletion(MediaPlayer mp) {
-                            finish(); // finish current activity
-                            Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
-                            next.setEnabled(true);
-                            next.setTextColor(getResources().getColor(R.color.colorPrimary));
-                            prev.setEnabled(true);
-                            prev.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        }
-                    });
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            lang.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    //startActivity(intent);
                 }
             });
         }catch (Exception ex){
             Toast.makeText(getApplicationContext(), "State is corrupted, please reset!", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        final Button sett = findViewById(R.id.profile_button);
-        sett.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Intent intent = new Intent(v.getContext(), ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+    // Catch touch events here
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            //
+        }
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            //System.out.println("Touch Up X:" + event.getX() + " Y:" + event.getY());
+        }
+        return super.onTouchEvent(event);
     }
 
     public static List<String> getContent(Context context, String filePath)
