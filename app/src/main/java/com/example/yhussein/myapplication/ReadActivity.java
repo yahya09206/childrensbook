@@ -73,12 +73,11 @@ public class ReadActivity extends AppCompatActivity {
             List<String> paragraphs = new ArrayList<>();
             paragraphs = getContent(this.getApplicationContext(), "book" + id + "_" + language + ".txt");
             if (paragraphs.size() > 0) {
+                // Setting values
+                tvtitle.setText(Title + " by " + Author);
                 tvdescription.setText(intro);
                 tvcategory.setText("[" + bookmark + "/" + paragraphs.size() + "]");
             }
-
-            // Setting values
-            tvtitle.setText(Title + " by " + Author);
 
             String soundF = "audio" + id + "_" + section + "_" + language;
             Resources res = this.getApplicationContext().getResources();
