@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ public class ReadActivity extends AppCompatActivity {
     private String sound;
     String soundF;
     String pix;
+    boolean running = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +81,8 @@ public class ReadActivity extends AppCompatActivity {
                 tvdescription.setText(paragraphs.get(bookmark + 1));
             }
 
-            String soundF = "audio" + id + "_" + section + "_" + language;
-            String pix = "image" + id + "_" + section;
+            soundF = "audio" + id + "_" + section + "_" + language;
+            pix = "image" + id + "_" + section;
             Resources res = this.getApplicationContext().getResources();
             final int pixId = res.getIdentifier(pix, "drawable", getApplicationContext().getPackageName());
             final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
@@ -87,26 +90,44 @@ public class ReadActivity extends AppCompatActivity {
 
             final ImageView imgButton = (ImageView) findViewById(R.id.book_img_id);
 
+            final Button prev = findViewById(R.id.prev);
             final Button play = findViewById(R.id.play);
-            final Button lang = findViewById(R.id.lang);
+            final Button pause = findViewById(R.id.pause);
+            final Button next = findViewById(R.id.next);
+            final Spinner lang = findViewById(R.id.lang);
             final Button close = findViewById(R.id.close);
 
-            play.setVisibility(View.GONE);
-            lang.setVisibility(View.GONE);
-            close.setVisibility(View.GONE);
+            play.setVisibility(View.VISIBLE);
+            prev.setVisibility(View.VISIBLE);
+            pause.setVisibility(View.GONE);
+            next.setVisibility(View.VISIBLE);
+            close.setVisibility(View.VISIBLE);
+            lang.setVisibility(View.VISIBLE);
             imgButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    play.setVisibility(View.VISIBLE);
-                    lang.setVisibility(View.VISIBLE);
+                    if(running){
+                        pause.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        play.setVisibility(View.VISIBLE);
+                    }
+                    next.setVisibility(View.VISIBLE);
+                    prev.setVisibility(View.VISIBLE);
                     close.setVisibility(View.VISIBLE);
+                    lang.setVisibility(View.VISIBLE);
                 }
             });
 
             play.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     play.setVisibility(View.GONE);
+                    prev.setVisibility(View.GONE);
+                    next.setVisibility(View.GONE);
+                    pause.setVisibility(View.GONE);
                     lang.setVisibility(View.GONE);
                     close.setVisibility(View.GONE);
+                    tvdescription.setMovementMethod(new ScrollingMovementMethod());
+
                     bookmark++;
                     if (bookmark > st.size() - 1) {
                         bookmark = st.size() - 1;
@@ -125,6 +146,40 @@ public class ReadActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
                         }
                     });
+                    running = true;
+                }
+            });
+
+            prev.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    //startActivity(intent);
+                }
+            });
+
+            pause.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    //startActivity(intent);
+                    running = false;
+                }
+            });
+
+            next.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    //startActivity(intent);
+                }
+            });
+
+            lang.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    //startActivity(intent);
                 }
             });
 
@@ -136,13 +191,6 @@ public class ReadActivity extends AppCompatActivity {
                 }
             });
 
-            lang.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // Code here executes on main thread after user presses button
-                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    //startActivity(intent);
-                }
-            });
         }catch (Exception ex){
             Toast.makeText(getApplicationContext(), "State is corrupted, please reset!", Toast.LENGTH_SHORT).show();
         }
