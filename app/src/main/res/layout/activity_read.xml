@@ -10,7 +10,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
         android:padding="10dp">
 
         <LinearLayout
@@ -18,6 +18,41 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="3dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/lang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:entries="@array/planets_array"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="22sp" />
+
+                    <Button
+                        android:id="@+id/close"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="CLOSE"
+                        android:textColor="?attr/colorPrimary"
+                        android:drawableTop="@drawable/ic_settings_black_24dp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -27,52 +62,85 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/todo" />
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
+                app:cardUseCompatPadding="true"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="3dp" >
 
-                <Button
-                    android:id="@+id/play"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_settings_black_24dp"
-                    android:text="Play"
-                    android:textColor="?attr/colorPrimary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/lang"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_settings_black_24dp"
-                    android:text="Lang"
-                    android:textColor="?attr/colorPrimary" />
+                    <Button
+                        android:id="@+id/prev"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/ic_skip_previous_black_24dp"
+                        android:text="PREVIOUS"
+                        android:textColor="?attr/colorPrimary" />
 
-                <Button
-                    android:id="@+id/close"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/ic_settings_black_24dp"
-                    android:text="close"
-                    android:textColor="?attr/colorPrimary" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/play"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/ic_settings_black_24dp"
+                        android:text="PLAY"
+                        android:textColor="?attr/colorPrimary" />
 
-            <TextView
+                    <Button
+                        android:id="@+id/pause"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/ic_settings_black_24dp"
+                        android:text="PAUSE"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/next"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/ic_skip_next_black_24dp"
+                        android:text="NEXT"
+                        android:textColor="?attr/colorPrimary" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <ScrollView
+                android:id="@+id/SCROLLER_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:fillViewport="true">
+
+                <TextView
+                    android:id="@+id/txtDesc"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"/>
+            </ScrollView>
+
+            <!--<TextView
                 android:id="@+id/txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/book_title"
+                android:scrollbars = "vertical"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="Book Title" />
+                android:textStyle="bold" />-->
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
