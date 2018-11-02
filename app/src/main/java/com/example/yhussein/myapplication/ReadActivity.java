@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ReadActivity extends AppCompatActivity {
+public class ReadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener  {
 
     private TextView tvdescription;
     private ImageView img;
@@ -52,25 +52,6 @@ public class ReadActivity extends AppCompatActivity {
         tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
         final Button close = findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                //R.array.planets_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        //spinner.setAdapter(adapter);
-
-        //spinner = (Spinner) findViewById(R.id.planets_spinner);
-        //spinner.setOnItemSelectedListener(this.onContextItemSelected());
 
         // Receive data
         Intent intent = getIntent();
@@ -85,11 +66,6 @@ public class ReadActivity extends AppCompatActivity {
             //get book content
             List<String> paragraphs = new ArrayList<>();
             paragraphs = getContent(this.getApplicationContext(), "book" + id + "_" + language + ".txt");
-            if (paragraphs.size() > 0) {
-                // Setting values
-                img.setImageResource(image);
-                tvdescription.setText(paragraphs.get(bookmark + 1));
-            }
 
             soundF = "audio" + id + "_" + section + "_" + language;
             pix = "image" + id + "_" + section;
@@ -106,12 +82,31 @@ public class ReadActivity extends AppCompatActivity {
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
 
-            play.setVisibility(View.VISIBLE);
+            final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+
+            if (paragraphs.size() > 0) {
+                // Setting values
+                img.setImageResource(image);
+                tvdescription.setText(paragraphs.get(bookmark));
+                mp.start();
+            }
+
+            play.setVisibility(View.GONE);
             prev.setVisibility(View.VISIBLE);
-            pause.setVisibility(View.GONE);
+            pause.setVisibility(View.VISIBLE);
             next.setVisibility(View.VISIBLE);
             close.setVisibility(View.VISIBLE);
             lang.setVisibility(View.VISIBLE);
+
+            close.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    mp.stop();
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             imgButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(running){
@@ -137,22 +132,7 @@ public class ReadActivity extends AppCompatActivity {
                     close.setVisibility(View.GONE);
                     tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
-                    bookmark++;
-                    if (bookmark > st.size() - 1) {
-                        bookmark = st.size() - 1;
-                    }
-                    section++;
-                    if (section > st.size() - 1) {
-                        section = st.size() - 1;
-                    }
-                    img.setImageResource(pixId);
-                    tvdescription.setText(st.get(bookmark));
-                    final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
-                    if(!running){
-                        mp.start();
-                    }else {
-                        mp.start();
-                    }
+                    mp.start();
                     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         public void onCompletion(MediaPlayer mp) {
                             finish(); // finish current activity
@@ -174,16 +154,25 @@ public class ReadActivity extends AppCompatActivity {
             prev.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    //startActivity(intent);
+                    bookmark--;
+                    if (bookmark < 0) {
+                        bookmark = 0;
+                    }
+                    section--;
+                    if (section < 0) {
+                        section = 0;
+                    }
+                    img.setImageResource(pixId);
+                    tvdescription.setText(st.get(bookmark));
+                    //mp.stop();;
+                    mp.start();
                 }
             });
 
             pause.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    //startActivity(intent);
+                    mp.pause();
                     play.setVisibility(View.VISIBLE);
                     pause.setVisibility(View.GONE);
                     running = false;
@@ -192,22 +181,40 @@ public class ReadActivity extends AppCompatActivity {
 
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    // Code here executes on main thread after user presses button
-                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    //startActivity(intent);
+                    //mp.stop();
+                    bookmark++;
+                    if (bookmark > st.size() - 1) {
+                        bookmark = st.size() - 1;
+                    }
+                    section++;
+                    if (section > st.size() - 1) {
+                        section = st.size() - 1;
+                    }
+                    img.setImageResource(pixId);
+                    tvdescription.setText(st.get(bookmark));
+                    mp.start();
                 }
             });
 
             lang.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    //startActivity(intent);
+                    //Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
+                    // Create an ArrayAdapter using the string array and a default spinner layout
+                    //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    //R.array.planets_array, android.R.layout.simple_spinner_item);
+                    // Specify the layout to use when the list of choices appears
+                    //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    // Apply the adapter to the spinner
+                    //spinner.setAdapter(adapter);
+
+                    //spinner = (Spinner) findViewById(R.id.planets_spinner);
+                    //spinner.setOnItemSelectedListener(this.onContextItemSelected());
                 }
             });
 
         }catch (Exception ex){
-            Toast.makeText(getApplicationContext(), "State is corrupted, please reset!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -267,5 +274,10 @@ public class ReadActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> parent) {
             // Another interface callback
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
