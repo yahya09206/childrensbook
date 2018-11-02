@@ -49,6 +49,16 @@ public class ReadActivity extends AppCompatActivity {
 
         img = (ImageView) findViewById(R.id.book_img_id);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
+        tvdescription.setMovementMethod(new ScrollingMovementMethod());
+
+        final Button close = findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -95,7 +105,6 @@ public class ReadActivity extends AppCompatActivity {
             final Button pause = findViewById(R.id.pause);
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
-            final Button close = findViewById(R.id.close);
 
             play.setVisibility(View.VISIBLE);
             prev.setVisibility(View.VISIBLE);
@@ -139,11 +148,23 @@ public class ReadActivity extends AppCompatActivity {
                     img.setImageResource(pixId);
                     tvdescription.setText(st.get(bookmark));
                     final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
-                    mp.start();
+                    if(!running){
+                        mp.start();
+                    }else {
+                        mp.start();
+                    }
                     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         public void onCompletion(MediaPlayer mp) {
                             finish(); // finish current activity
                             Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
+                            bookmark++;
+                            if (bookmark > st.size() - 1) {
+                                bookmark = st.size() - 1;
+                            }
+                            section++;
+                            if (section > st.size() - 1) {
+                                section = st.size() - 1;
+                            }
                         }
                     });
                     running = true;
@@ -163,6 +184,8 @@ public class ReadActivity extends AppCompatActivity {
                     // Code here executes on main thread after user presses button
                     //Intent intent = new Intent(v.getContext(), MainActivity.class);
                     //startActivity(intent);
+                    play.setVisibility(View.VISIBLE);
+                    pause.setVisibility(View.GONE);
                     running = false;
                 }
             });
@@ -180,14 +203,6 @@ public class ReadActivity extends AppCompatActivity {
                     // Code here executes on main thread after user presses button
                     //Intent intent = new Intent(v.getContext(), MainActivity.class);
                     //startActivity(intent);
-                }
-            });
-
-            close.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // Code here executes on main thread after user presses button
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    startActivity(intent);
                 }
             });
 
