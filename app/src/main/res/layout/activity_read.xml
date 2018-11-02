@@ -30,6 +30,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -119,28 +120,14 @@
 
             </android.support.v7.widget.CardView>
 
-            <ScrollView
-                android:id="@+id/SCROLLER_ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:fillViewport="true">
-
-                <TextView
-                    android:id="@+id/txtDesc"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1.0"/>
-            </ScrollView>
-
-            <!--<TextView
+            <TextView
                 android:id="@+id/txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:scrollbars = "vertical"
                 android:textSize="18sp"
-                android:textStyle="bold" />-->
+                android:textStyle="bold" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
