@@ -41,11 +41,13 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
     String soundF;
     String pix;
     boolean running = false;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
+        db = AppDatabase.getAppDatabase(getApplicationContext());
 
         img = (ImageView) findViewById(R.id.book_img_id);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
@@ -56,11 +58,12 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         // Receive data
         Intent intent = getIntent();
         id = intent.getExtras().getString("Id");
-        int image = intent.getExtras().getInt("Thumbnail");
         bookmark = intent.getExtras().getInt("Bookmark");
         language = intent.getExtras().getString("Language");
-        sound = intent.getExtras().getString("Sound");
-        section = bookmark + 1;
+        section = intent.getExtras().getInt("Section");
+        if(section == 0) {
+            section = bookmark + 1;
+        }
 
         try {
             //get book content
@@ -86,14 +89,13 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
 
             if (paragraphs.size() > 0) {
                 // Setting values
-                img.setImageResource(image);
+                img.setImageResource(pixId);
                 tvdescription.setText(paragraphs.get(bookmark));
-                mp.start();
             }
 
-            play.setVisibility(View.GONE);
+            play.setVisibility(View.VISIBLE);
             prev.setVisibility(View.VISIBLE);
-            pause.setVisibility(View.VISIBLE);
+            pause.setVisibility(View.GONE);
             next.setVisibility(View.VISIBLE);
             close.setVisibility(View.VISIBLE);
             lang.setVisibility(View.VISIBLE);
@@ -137,14 +139,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                         public void onCompletion(MediaPlayer mp) {
                             finish(); // finish current activity
                             Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
-                            bookmark++;
-                            if (bookmark > st.size() - 1) {
-                                bookmark = st.size() - 1;
-                            }
-                            section++;
-                            if (section > st.size() - 1) {
-                                section = st.size() - 1;
-                            }
                         }
                     });
                     running = true;
@@ -154,18 +148,19 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             prev.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    bookmark--;
-                    if (bookmark < 0) {
-                        bookmark = 0;
-                    }
+                    mp.stop();
                     section--;
                     if (section < 0) {
                         section = 0;
                     }
-                    img.setImageResource(pixId);
-                    tvdescription.setText(st.get(bookmark));
-                    //mp.stop();;
-                    mp.start();
+
+                    Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+                    // passing data to the book activity
+                    intent.putExtra("Id", id);
+                    intent.putExtra("Section", section);
+                    intent.putExtra("Language", language);
+                    // start the activity
+                    getApplication().startActivity(intent);
                 }
             });
 
@@ -181,18 +176,19 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
 
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //mp.stop();
-                    bookmark++;
-                    if (bookmark > st.size() - 1) {
-                        bookmark = st.size() - 1;
-                    }
+                    mp.stop();
                     section++;
                     if (section > st.size() - 1) {
                         section = st.size() - 1;
                     }
-                    img.setImageResource(pixId);
-                    tvdescription.setText(st.get(bookmark));
-                    mp.start();
+
+                    Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+                    // passing data to the book activity
+                    intent.putExtra("Id", id);
+                    intent.putExtra("Section", section);
+                    intent.putExtra("Language", language);
+                    // start the activity
+                    getApplication().startActivity(intent);
                 }
             });
 
@@ -214,7 +210,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             });
 
         }catch (Exception ex){
-            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "A little issue going on!", Toast.LENGTH_SHORT).show();
         }
     }
 
