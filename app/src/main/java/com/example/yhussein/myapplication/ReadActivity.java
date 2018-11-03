@@ -90,7 +90,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             if (paragraphs.size() > 0) {
                 // Setting values
                 img.setImageResource(pixId);
-                tvdescription.setText(paragraphs.get(bookmark));
+                tvdescription.setText("[" + bookmark + "/" + paragraphs.size() + "] " + paragraphs.get(bookmark));
             }
 
             play.setVisibility(View.VISIBLE);
@@ -149,6 +149,10 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
                     mp.stop();
+                    bookmark--;
+                    if (bookmark < 0) {
+                        bookmark = 0;
+                    }
                     section--;
                     if (section < 0) {
                         section = 0;
@@ -159,6 +163,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     intent.putExtra("Id", id);
                     intent.putExtra("Section", section);
                     intent.putExtra("Language", language);
+                    intent.putExtra("Bookmark", bookmark);
                     // start the activity
                     getApplication().startActivity(intent);
                 }
@@ -177,6 +182,10 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mp.stop();
+                    bookmark++;
+                    if (bookmark > st.size() - 1) {
+                        bookmark = st.size() - 1;
+                    }
                     section++;
                     if (section > st.size() - 1) {
                         section = st.size() - 1;
@@ -187,6 +196,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     intent.putExtra("Id", id);
                     intent.putExtra("Section", section);
                     intent.putExtra("Language", language);
+                    intent.putExtra("Bookmark", bookmark);
                     // start the activity
                     getApplication().startActivity(intent);
                 }

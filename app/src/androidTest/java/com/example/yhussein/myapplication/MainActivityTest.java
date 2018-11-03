@@ -51,28 +51,27 @@ public class MainActivityTest {
 
     @Test
     public void testInfoDisplay() {
+        onView(withIndex(withId(R.id.book_title_id), 0))
+                .check(matches(withText("Great Book Title 1")));
+        onView(withIndex(withId(R.id.book_author_id), 0))
+                .check(matches(withText("by Mekone Tolrom")));
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        //onView(withIndex(withId(R.id.book_title_id), 0))
-                //.check(matches(withText("Great Book Title 1")));
-        //onView(withId(R.id.book_author_id))
-          //      .check(matches(withText("by Mekone Tolrom")));
     }
 
     @Test
     public void testNavigateToReading() {
-        onView(withId(R.id.recyclerView_id)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction
-                        .clickChildViewWithId(R.id.book_img_id)));
-        //onView(withId(R.id.recyclerView_id))
-                //.perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        //onView(withId(R.id.txttitle))
-                //.check(matches(withText("Great Book Title 1 by Mekone Tolrom")));
-        //onView(withId(R.id.txtCat))
-                //.check(matches(withText("[0/26]")));
-        //onView(withId(R.id.txtDesc))
-                //.check(matches(withText("***** START READ OR LISTEN ******")));
-        //onView(withIndex(withId(R.id.next_button), 0)).perform(click());
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.lang)).check(matches(isDisplayed()));
+        onView(withId(R.id.close)).check(matches(isDisplayed()));
+        onView(withId(R.id.next)).check(matches(isDisplayed()));
+        onView(withId(R.id.prev)).check(matches(isDisplayed()));
+        onView(withId(R.id.play)).check(matches(isDisplayed()));
+        onView(withId(R.id.play)).perform(click());
+        onView(withId(R.id.book_img_id)).perform(click());
+        onView(withId(R.id.next)).perform(click());
+        onView(withId(R.id.prev)).perform(click());
+        onView(withId(R.id.close)).perform(click());
     }
 
     @Test
