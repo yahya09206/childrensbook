@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,9 +71,9 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             section = bookmark + 1;
         }
 
+        List<String> paragraphs = new ArrayList<>();
         try {
             //get book content
-            List<String> paragraphs = new ArrayList<>();
             paragraphs = getContent(this.getApplicationContext(), "book" + id + "_" + language + ".txt");
 
             soundF = "audio" + id + "_" + section + "_" + language;
@@ -91,12 +94,10 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
 
             final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
 
-            lang.setSelection(((ArrayAdapter)lang.getAdapter()).getPosition(language));
-            son.setSelection(((ArrayAdapter)lang.getAdapter()).getPosition(sound));
-            if (paragraphs.size() > 0) {
-                // Setting values
+            if (st.size() > 0) {
+                //set image and text values
                 img.setImageResource(pixId);
-                tvdescription.setText("[" + bookmark + "/" + paragraphs.size() + "] " + paragraphs.get(bookmark));
+                tvdescription.setText("[" + bookmark + "/" + st.size() + " - " + language + "] " + paragraphs.get(bookmark));
             }
 
             play.setVisibility(View.VISIBLE);
@@ -113,14 +114,27 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                                            int position, long id) {
                     Object item = adapterView.getItemAtPosition(position);
                     if (item != null) {
-                        Toast.makeText(ReadActivity.this, "language : " + item.toString(),
-                                Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ReadActivity.this, "language : " + item.toString(),
+                                //Toast.LENGTH_SHORT).show();
                         language = item.toString();
 
                         List<State> lg = db.statesDao().getAllStates();
                         if(!language.equals(lg.get(0).getReaderLanguage())) {
                             Toast.makeText(ReadActivity.this, "switching to : " + item.toString(),
                                     Toast.LENGTH_SHORT).show();
+
+                            Log.i("seps", "===============*****===================");
+                            Log.i("langold", language);
+                            Log.i("langnew", lg.get(0).getReaderLanguage());
+                            Log.i("section", Integer.toString(section));
+                            Log.i("sepe", "===============****====================");
+
+                            //update language value
+                            if(lg != null) {
+                                lg.get(0).setReaderLanguage(language);
+                                updateDatabase(lg.get(0));
+                            }
+
                             Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
                             intent.putExtra("Id", id2);
                             intent.putExtra("Sound", sound);
@@ -135,7 +149,8 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // TODO Auto-generated method stub
-
+                    //List<State> lg = db.statesDao().getAllStates();
+                    //lang.setSelection(((ArrayAdapter)lang.getAdapter()).getPosition(lg.get(0).getReaderLanguage()));
                 }
             });
 
@@ -145,14 +160,21 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                                            int position, long id) {
                     Object item = adapterView.getItemAtPosition(position);
                     if (item != null) {
-                        Toast.makeText(ReadActivity.this, "sound is : " + item.toString(),
-                                Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ReadActivity.this, "sound is : " + item.toString(),
+                                //Toast.LENGTH_SHORT).show();
                         sound = item.toString();
 
-                        List<State> lg = db.statesDao().getAllStates();
-                        if(!sound.equals(lg.get(0).getSoundStatus())) {
+                        List<State> sd = db.statesDao().getAllStates();
+                        if(!sound.equals(sd.get(0).getSoundStatus())) {
                             Toast.makeText(ReadActivity.this, "turning sound : " + item.toString(),
                                     Toast.LENGTH_SHORT).show();
+
+                            //update sound status
+                            if(sd != null) {
+                                sd.get(0).setSoundStatus(sound);
+                                updateDatabase(sd.get(0));
+                            }
+
                             Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
                             intent.putExtra("Id", id2);
                             intent.putExtra("Sound", sound);
@@ -167,7 +189,8 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // TODO Auto-generated method stub
-
+                    //List<State> sd = db.statesDao().getAllStates();
+                    //son.setSelection(((ArrayAdapter)son.getAdapter()).getPosition(sd.get(0).getSoundStatus()));
                 }
             });
 
@@ -237,6 +260,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     intent.putExtra("Section", section);
                     intent.putExtra("Language", language);
                     intent.putExtra("Bookmark", bookmark);
+                    intent.putExtra("Sound", sound);
                     // start the activity
                     getApplication().startActivity(intent);
                 }
@@ -270,13 +294,14 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     intent.putExtra("Section", section);
                     intent.putExtra("Language", language);
                     intent.putExtra("Bookmark", bookmark);
+                    intent.putExtra("Sound", sound);
                     // start the activity
                     getApplication().startActivity(intent);
                 }
             });
 
         }catch (Exception ex){
-            Toast.makeText(getApplicationContext(), "oops!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "rec=" + paragraphs.size(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -325,34 +350,102 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         return paragraphs;
     }
 
-    /*public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
-    //...
-
-        public void onItemSelected(AdapterView<?> parent, View view,
-                                   int pos, long id) {
-            // An item was selected. You can retrieve the selected item using
-            // parent.getItemAtPosition(pos)
-            //Spinner mySpinner = (Spinner) findViewById(R.id.lang);
-            language = parent.getItemAtPosition(pos).toString();
-            sound = parent.getItemAtPosition(pos).toString();
-
-            Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
-            // passing data to the book activity
-            intent.putExtra("Id", id);
-            intent.putExtra("Section", section);
-            intent.putExtra("Language", language);
-            intent.putExtra("Bookmark", bookmark);
-            // start the activity
-            getApplication().startActivity(intent);
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) {
-            // Another interface callback
-        }
-    }*/
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+    }
+
+    /****************STATE**********************/
+    //update
+    public void updateDatabase(State state) {
+        new ReadActivity.UpdateStateTask(this, state).execute();
+    }
+
+    private static class UpdateStateTask extends AsyncTask<Void, Void, State> {
+
+        private WeakReference<Activity> weakActivity;
+        private State state;
+
+        public UpdateStateTask(Activity activity, State state) {
+            weakActivity = new WeakReference<>(activity);
+            this.state = state;
+        }
+
+        @Override
+        protected State doInBackground(Void... voids) {
+            Activity activity = weakActivity.get();
+            if (activity == null) {
+                return null;
+            }
+
+            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
+            db.statesDao().updateStates(state);
+            return state;
+        }
+    }
+
+    //insert
+    public void insertDatabase(State state) {
+        new ReadActivity.InsertStateTask(this, state).execute();
+    }
+
+    private static class InsertStateTask extends AsyncTask<Void, Void, State> {
+
+        private WeakReference<Activity> weakActivity;
+        private State state;
+
+        public InsertStateTask(Activity activity, State state) {
+            weakActivity = new WeakReference<>(activity);
+            this.state = state;
+        }
+
+        @Override
+        protected State doInBackground(Void... voids) {
+            Activity activity = weakActivity.get();
+            if (activity == null) {
+                return null;
+            }
+
+            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
+            db.statesDao().insertAll(state);
+            return state;
+        }
+    }
+
+    //get
+    private static List<State> loadAllStates(final AppDatabase db) {
+        List<State> states = db.statesDao().getAllStates();
+        return states;
+    }
+
+    private static class GetStateTask extends AsyncTask<Void, Void, State> {
+
+        private WeakReference<Activity> weakActivity;
+
+        public GetStateTask(Activity activity) {
+            weakActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected State doInBackground(Void... voids) {
+            Activity activity = weakActivity.get();
+            if (activity == null) {
+                return null;
+            }
+
+            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
+            List<State> states = db.statesDao().getAllStates();
+            if (states.size() <= 0 || states.get(0) == null) {
+                return null;
+            }
+            return states.get(0);
+        }
+        @Override
+        protected void onPostExecute(State state) {
+            MainActivity activity = (MainActivity) weakActivity.get();
+            if(state == null || activity == null) {
+                return;
+            }
+        }
     }
 }
