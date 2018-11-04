@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         sRecords = db.statesDao().getAllStates();
         if(localRecords.size() == 0 && resetCount == 0) {
             localRecords.add(new Setting(R.drawable.image1_1, "Great Book Title 1", "Mekone Tolrom", "Mekone", "0", "0", "On", "1", "audio1_english.mp3", "book1_english.txt", 0));
-            localRecords.add(new Setting(R.drawable.image1_2, "Great Book Title 2", "Yahya Smith", "Yahya", "0", "0", "On", "2", "audio1_english.mp3", "book1_english.txt", 0));
+            localRecords.add(new Setting(R.drawable.image1_2, "Great Book Title 2", "Yahya Smith", "Yahya", "0", "0", "On", "2", "audio2_english.mp3", "book2_english.txt", 0));
             //book 3
             //book 4
             //book 5

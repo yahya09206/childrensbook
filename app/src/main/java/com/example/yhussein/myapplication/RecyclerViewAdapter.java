@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 // passing data to the book activity
                 intent.putExtra("Id", mData.get(position).getPhotoId());
-                intent.putExtra("Thumbnail", mData.get(position).getBookId());
+                //intent.putExtra("Thumbnail", mData.get(position).getBookId());
                 intent.putExtra("Bookmark", sRecords.get(0).getBookMark());
                 intent.putExtra("Language", sRecords.get(0).getReaderLanguage());
                 intent.putExtra("Sound", sRecords.get(0).getSoundStatus());
@@ -72,7 +72,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tv_book_title;
         TextView tv_book_author;
         ImageView img_book_thumbnail;
-        //Button actionButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -80,7 +79,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_book_title = (TextView) itemView.findViewById(R.id.book_title_id);
             tv_book_author = (TextView) itemView.findViewById(R.id.book_author_id);
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
-            //actionButton = itemView.findViewById(R.id.action_button);
         }
     }
 

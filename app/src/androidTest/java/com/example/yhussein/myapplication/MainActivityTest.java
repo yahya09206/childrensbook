@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Root;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.rule.ActivityTestRule;
@@ -30,10 +31,13 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.yhussein.myapplication.MyViewAction.clickChildViewWithId;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -75,6 +79,12 @@ public class MainActivityTest {
     }
 
     @Test
+    public void testPOJO() {
+        onView(withId(R.id.recyclerView_id)).check(new Matchers(2));
+        //onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+    }
+
+    @Test
     public void testCardViewDisplay() {
         onView(withIndex(withId(R.id.card_view), 0)).check(matches(isDisplayed()));
     }
@@ -101,7 +111,7 @@ public class MainActivityTest {
 
         @Override
         public void describeTo(Description description) {
-            description.appendText("You liked");
+            description.appendText("Welcome");
         }
 
         @Override
