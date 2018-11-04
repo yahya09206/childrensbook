@@ -54,7 +54,9 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CLOSE"
+                        android:layout_marginStart="60dp"
+                        android:drawableTop="@drawable/ic_close_black_24dp"
+                        android:text="@string/close"
                         android:textColor="?attr/colorPrimary" />
                 </LinearLayout>
 
@@ -87,9 +89,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_skip_previous_black_24dp"
-                        android:text="PREVIOUS"
+                        android:text="@string/previous"
                         android:textColor="?attr/colorPrimary" />
 
                     <Button
@@ -97,9 +98,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawableTop="@drawable/ic_settings_black_24dp"
-                        android:text="PLAY"
+                        android:drawableTop="@drawable/ic_play_arrow_black_24dp"
+                        android:text="@string/play"
                         android:textColor="?attr/colorPrimary" />
 
                     <Button
@@ -107,9 +107,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawableTop="@drawable/ic_settings_black_24dp"
-                        android:text="PAUSE"
+                        android:drawableTop="@drawable/ic_pause_black_24dp"
+                        android:text="@string/pause"
                         android:textColor="?attr/colorPrimary" />
 
                     <Button
@@ -117,9 +116,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_skip_next_black_24dp"
-                        android:text="NEXT"
+                        android:text="@string/next"
                         android:textColor="?attr/colorPrimary" />
                 </LinearLayout>
 
