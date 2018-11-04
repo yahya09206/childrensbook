@@ -27,11 +27,15 @@
     <string name="home">HOME</string>
     <string name="settings">Settings</string>
     <string-array name="planets_array">
-        <item>English</item>
-        <item>French</item>
-        <item>Spanish</item>
-        <item>Italian</item>
-        <item>Russian</item>
+        <item>english</item>
+        <item>french</item>
+        <item>spanish</item>
+        <item>italian</item>
+        <item>lithuanian</item>
+    </string-array>
+    <string-array name="sounds_array">
+        <item>On</item>
+        <item>Off</item>
     </string-array>
     <!-- Strings related to Settings -->
     <!-- Example General settings -->

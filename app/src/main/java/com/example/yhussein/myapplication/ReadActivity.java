@@ -34,6 +34,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
     private TextView tvdescription;
     private ImageView img;
     private String id;
+    private String id2;
     private int bookmark;
     private int section;
     private String language;
@@ -58,6 +59,8 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         // Receive data
         Intent intent = getIntent();
         id = intent.getExtras().getString("Id");
+        id2 = id;
+        sound = intent.getExtras().getString("Sound");
         bookmark = intent.getExtras().getInt("Bookmark");
         language = intent.getExtras().getString("Language");
         section = intent.getExtras().getInt("Section");
@@ -84,9 +87,12 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             final Button pause = findViewById(R.id.pause);
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
+            final Spinner son = findViewById(R.id.son);
 
             final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
 
+            lang.setSelection(((ArrayAdapter)lang.getAdapter()).getPosition(language));
+            son.setSelection(((ArrayAdapter)lang.getAdapter()).getPosition(sound));
             if (paragraphs.size() > 0) {
                 // Setting values
                 img.setImageResource(pixId);
@@ -99,6 +105,71 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             next.setVisibility(View.VISIBLE);
             close.setVisibility(View.VISIBLE);
             lang.setVisibility(View.VISIBLE);
+            son.setVisibility(View.VISIBLE);
+
+            lang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    Object item = adapterView.getItemAtPosition(position);
+                    if (item != null) {
+                        Toast.makeText(ReadActivity.this, "language : " + item.toString(),
+                                Toast.LENGTH_SHORT).show();
+                        language = item.toString();
+
+                        List<State> lg = db.statesDao().getAllStates();
+                        if(!language.equals(lg.get(0).getReaderLanguage())) {
+                            Toast.makeText(ReadActivity.this, "switching to : " + item.toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+                            intent.putExtra("Id", id2);
+                            intent.putExtra("Sound", sound);
+                            intent.putExtra("Section", section);
+                            intent.putExtra("Language", language);
+                            intent.putExtra("Bookmark", bookmark);
+                            getApplication().startActivity(intent);
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+
+            son.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    Object item = adapterView.getItemAtPosition(position);
+                    if (item != null) {
+                        Toast.makeText(ReadActivity.this, "sound is : " + item.toString(),
+                                Toast.LENGTH_SHORT).show();
+                        sound = item.toString();
+
+                        List<State> lg = db.statesDao().getAllStates();
+                        if(!sound.equals(lg.get(0).getSoundStatus())) {
+                            Toast.makeText(ReadActivity.this, "turning sound : " + item.toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+                            intent.putExtra("Id", id2);
+                            intent.putExtra("Sound", sound);
+                            intent.putExtra("Section", section);
+                            intent.putExtra("Language", language);
+                            intent.putExtra("Bookmark", bookmark);
+                            getApplication().startActivity(intent);
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
 
             close.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -121,6 +192,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     prev.setVisibility(View.VISIBLE);
                     close.setVisibility(View.VISIBLE);
                     lang.setVisibility(View.VISIBLE);
+                    son.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -132,6 +204,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     pause.setVisibility(View.GONE);
                     lang.setVisibility(View.GONE);
                     close.setVisibility(View.GONE);
+                    son.setVisibility(View.GONE);
                     tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
                     mp.start();
@@ -202,25 +275,8 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            lang.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // Code here executes on main thread after user presses button
-                    //Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
-                    // Create an ArrayAdapter using the string array and a default spinner layout
-                    //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                    //R.array.planets_array, android.R.layout.simple_spinner_item);
-                    // Specify the layout to use when the list of choices appears
-                    //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    // Apply the adapter to the spinner
-                    //spinner.setAdapter(adapter);
-
-                    //spinner = (Spinner) findViewById(R.id.planets_spinner);
-                    //spinner.setOnItemSelectedListener(this.onContextItemSelected());
-                }
-            });
-
         }catch (Exception ex){
-            Toast.makeText(getApplicationContext(), "A little issue going on!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "oops!!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -254,6 +310,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             paragraphs = new ArrayList<String>(Arrays.asList(splittedLine));
         } catch (IOException e) {
             //log the exception
+            String sError = e.getMessage();
         } finally {
             if (reader != null) {
                 try {
@@ -268,19 +325,31 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         return paragraphs;
     }
 
-    public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
+    /*public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
     //...
 
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int pos, long id) {
             // An item was selected. You can retrieve the selected item using
             // parent.getItemAtPosition(pos)
+            //Spinner mySpinner = (Spinner) findViewById(R.id.lang);
+            language = parent.getItemAtPosition(pos).toString();
+            sound = parent.getItemAtPosition(pos).toString();
+
+            Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+            // passing data to the book activity
+            intent.putExtra("Id", id);
+            intent.putExtra("Section", section);
+            intent.putExtra("Language", language);
+            intent.putExtra("Bookmark", bookmark);
+            // start the activity
+            getApplication().startActivity(intent);
         }
 
         public void onNothingSelected(AdapterView<?> parent) {
             // Another interface callback
         }
-    }
+    }*/
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
