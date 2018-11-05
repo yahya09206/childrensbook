@@ -385,7 +385,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //insert
-    public void insertDatabase(State state) {
+    /*public void insertDatabase(State state) {
         new ReadActivity.InsertStateTask(this, state).execute();
     }
 
@@ -410,10 +410,10 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             db.statesDao().insertAll(state);
             return state;
         }
-    }
+    }*/
 
     //get
-    private static List<State> loadAllStates(final AppDatabase db) {
+    /*private static List<State> loadAllStates(final AppDatabase db) {
         List<State> states = db.statesDao().getAllStates();
         return states;
     }
@@ -447,5 +447,5 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 return;
             }
         }
-    }
+    }*/
 }

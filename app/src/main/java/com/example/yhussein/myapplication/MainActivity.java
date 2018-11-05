@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //update
-    public void updateDatabase(View view, Setting setting) {
+    /*public void updateDatabase(View view, Setting setting) {
         new UpdateSettingTask(this, setting).execute();
     }
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             db.settingsDao().updateSettings(setting);
             return setting;
         }
-    }
+    }*/
 
     //insert
     public void insertDatabase(Setting setting) {
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //get
-    private static List<Setting> loadAllBooks(final AppDatabase db) {
+    /*private static List<Setting> loadAllBooks(final AppDatabase db) {
         List<Setting> settings = db.settingsDao().getAllBooks();
         return settings;
     }
@@ -184,11 +184,11 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
-    }
+    }*/
 
     /****************STATE**********************/
     //update
-    public void updateDatabase(View view, State state) {
+    /*public void updateDatabase(View view, State state) {
         new UpdateStateTask(this, state).execute();
     }
 
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             db.statesDao().updateStates(state);
             return state;
         }
-    }
+    }*/
 
     //insert
     public void insertDatabase(State state) {
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //get
-    private static List<State> loadAllStates(final AppDatabase db) {
+    /*private static List<State> loadAllStates(final AppDatabase db) {
         List<State> states = db.statesDao().getAllStates();
         return states;
     }
@@ -278,5 +278,5 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
-    }
+    }*/
 }
