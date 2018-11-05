@@ -123,12 +123,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                             Toast.makeText(ReadActivity.this, "switching to : " + item.toString(),
                                     Toast.LENGTH_SHORT).show();
 
-                            Log.i("seps", "===============*****===================");
-                            Log.i("langold", language);
-                            Log.i("langnew", lg.get(0).getReaderLanguage());
-                            Log.i("section", Integer.toString(section));
-                            Log.i("sepe", "===============****====================");
-
                             //update language value
                             if(lg != null) {
                                 lg.get(0).setReaderLanguage(language);
@@ -383,69 +377,4 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             return state;
         }
     }
-
-    //insert
-    /*public void insertDatabase(State state) {
-        new ReadActivity.InsertStateTask(this, state).execute();
-    }
-
-    private static class InsertStateTask extends AsyncTask<Void, Void, State> {
-
-        private WeakReference<Activity> weakActivity;
-        private State state;
-
-        public InsertStateTask(Activity activity, State state) {
-            weakActivity = new WeakReference<>(activity);
-            this.state = state;
-        }
-
-        @Override
-        protected State doInBackground(Void... voids) {
-            Activity activity = weakActivity.get();
-            if (activity == null) {
-                return null;
-            }
-
-            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
-            db.statesDao().insertAll(state);
-            return state;
-        }
-    }*/
-
-    //get
-    /*private static List<State> loadAllStates(final AppDatabase db) {
-        List<State> states = db.statesDao().getAllStates();
-        return states;
-    }
-
-    private static class GetStateTask extends AsyncTask<Void, Void, State> {
-
-        private WeakReference<Activity> weakActivity;
-
-        public GetStateTask(Activity activity) {
-            weakActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        protected State doInBackground(Void... voids) {
-            Activity activity = weakActivity.get();
-            if (activity == null) {
-                return null;
-            }
-
-            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
-            List<State> states = db.statesDao().getAllStates();
-            if (states.size() <= 0 || states.get(0) == null) {
-                return null;
-            }
-            return states.get(0);
-        }
-        @Override
-        protected void onPostExecute(State state) {
-            MainActivity activity = (MainActivity) weakActivity.get();
-            if(state == null || activity == null) {
-                return;
-            }
-        }
-    }*/
 }

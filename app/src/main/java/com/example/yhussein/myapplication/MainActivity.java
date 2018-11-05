@@ -93,34 +93,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    //update
-    /*public void updateDatabase(View view, Setting setting) {
-        new UpdateSettingTask(this, setting).execute();
-    }
-
-    private static class UpdateSettingTask extends AsyncTask<Void, Void, Setting> {
-
-        private WeakReference<Activity> weakActivity;
-        private Setting setting;
-
-        public UpdateSettingTask(Activity activity, Setting setting) {
-            weakActivity = new WeakReference<>(activity);
-            this.setting = setting;
-        }
-
-        @Override
-        protected Setting doInBackground(Void... voids) {
-            Activity activity = weakActivity.get();
-            if (activity == null) {
-                return null;
-            }
-
-            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
-            db.settingsDao().updateSettings(setting);
-            return setting;
-        }
-    }*/
-
     //insert
     public void insertDatabase(Setting setting) {
         new InsertSettingTask(this, setting).execute();
@@ -149,72 +121,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //get
-    /*private static List<Setting> loadAllBooks(final AppDatabase db) {
-        List<Setting> settings = db.settingsDao().getAllBooks();
-        return settings;
-    }
-
-    private static class GetSettingTask extends AsyncTask<Void, Void, Setting> {
-
-        private WeakReference<Activity> weakActivity;
-
-        public GetSettingTask(Activity activity) {
-            weakActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        protected Setting doInBackground(Void... voids) {
-            Activity activity = weakActivity.get();
-            if (activity == null) {
-                return null;
-            }
-
-            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
-            List<Setting> users = db.settingsDao().getAllBooks();
-            if (users.size() <= 0 || users.get(0) == null) {
-                return null;
-            }
-            return users.get(0);
-        }
-        @Override
-        protected void onPostExecute(Setting setting) {
-            MainActivity activity = (MainActivity) weakActivity.get();
-            if(setting == null || activity == null) {
-                return;
-            }
-        }
-    }*/
-
-    /****************STATE**********************/
-    //update
-    /*public void updateDatabase(View view, State state) {
-        new UpdateStateTask(this, state).execute();
-    }
-
-    private static class UpdateStateTask extends AsyncTask<Void, Void, State> {
-
-        private WeakReference<Activity> weakActivity;
-        private State state;
-
-        public UpdateStateTask(Activity activity, State state) {
-            weakActivity = new WeakReference<>(activity);
-            this.state = state;
-        }
-
-        @Override
-        protected State doInBackground(Void... voids) {
-            Activity activity = weakActivity.get();
-            if (activity == null) {
-                return null;
-            }
-
-            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
-            db.statesDao().updateStates(state);
-            return state;
-        }
-    }*/
-
     //insert
     public void insertDatabase(State state) {
         new InsertStateTask(this, state).execute();
@@ -242,41 +148,4 @@ public class MainActivity extends AppCompatActivity {
             return state;
         }
     }
-
-    //get
-    /*private static List<State> loadAllStates(final AppDatabase db) {
-        List<State> states = db.statesDao().getAllStates();
-        return states;
-    }
-
-    private static class GetStateTask extends AsyncTask<Void, Void, State> {
-
-        private WeakReference<Activity> weakActivity;
-
-        public GetStateTask(Activity activity) {
-            weakActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        protected State doInBackground(Void... voids) {
-            Activity activity = weakActivity.get();
-            if (activity == null) {
-                return null;
-            }
-
-            AppDatabase db = AppDatabase.getAppDatabase(activity.getApplicationContext());
-            List<State> states = db.statesDao().getAllStates();
-            if (states.size() <= 0 || states.get(0) == null) {
-                return null;
-            }
-            return states.get(0);
-        }
-        @Override
-        protected void onPostExecute(State state) {
-            MainActivity activity = (MainActivity) weakActivity.get();
-            if(state == null || activity == null) {
-                return;
-            }
-        }
-    }*/
 }

@@ -1,6 +1,8 @@
 package com.example.yhussein.myapplication;
 
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -54,13 +56,32 @@ public class MainActivityTest {
     }
 
     /*@Test
-    public void testInfoDisplay() {
-        onView(withIndex(withId(R.id.book_title_id), 0))
-                .check(matches(withText("Great Book Title 1")));
-        onView(withIndex(withId(R.id.book_author_id), 0))
-                .check(matches(withText("by Mekone Tolrom")));
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+    public void TestToastDisplay(){
+        onView(withText("Welcome back! You have 2 books!")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }*/
+
+    @Test
+    public void TestIntent(){
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Bookmark", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Sound", "On");
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+    }
+
+    @Test
+    public void TestReadIntent(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Bookmark", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Sound", "On");
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+    }
 
     @Test
     public void testNavigateToReading() {
@@ -75,10 +96,12 @@ public class MainActivityTest {
         onView(withId(R.id.next)).check(matches(isDisplayed()));
         onView(withId(R.id.prev)).check(matches(isDisplayed()));
         onView(withId(R.id.play)).check(matches(isDisplayed()));
+        //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
         onView(withId(R.id.play)).perform(click());
         onView(withId(R.id.book_img_id)).perform(click());
         onView(withId(R.id.next)).perform(click());
         onView(withId(R.id.prev)).perform(click());
+        //onView(withText("Welcome back! You have 2 books!")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withId(R.id.close)).perform(click());
     }
 
