@@ -119,7 +119,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                         language = item.toString();
 
                         List<State> lg = db.statesDao().getAllStates();
-                        if(!language.equals(lg.get(0).getReaderLanguage())) {
+                        if(!language.equals("Lang")) {
                             Toast.makeText(ReadActivity.this, "switching to : " + item.toString(),
                                     Toast.LENGTH_SHORT).show();
 
@@ -159,7 +159,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                         sound = item.toString();
 
                         List<State> sd = db.statesDao().getAllStates();
-                        if(!sound.equals(sd.get(0).getSoundStatus())) {
+                        if(!sound.equals("Sound")) {
                             Toast.makeText(ReadActivity.this, "turning sound : " + item.toString(),
                                     Toast.LENGTH_SHORT).show();
 
@@ -224,13 +224,15 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     son.setVisibility(View.GONE);
                     tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
-                    mp.start();
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        public void onCompletion(MediaPlayer mp) {
-                            finish(); // finish current activity
-                            Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    if(sound.equals("On")) {
+                        mp.start();
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                finish(); // finish current activity
+                                Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                     running = true;
                 }
             });
@@ -263,7 +265,9 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             pause.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    mp.pause();
+                    if(sound.equals("On")) {
+                        mp.pause();
+                    }
                     play.setVisibility(View.VISIBLE);
                     pause.setVisibility(View.GONE);
                     running = false;
