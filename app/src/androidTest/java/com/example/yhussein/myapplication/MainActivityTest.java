@@ -95,6 +95,8 @@ public class MainActivityTest {
                 .check(matches(withText("Great Book Title 1")));
         onView(withIndex(withId(R.id.book_author_id), 0))
                 .check(matches(withText("by Mekone Tolrom")));
+        onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
+
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
