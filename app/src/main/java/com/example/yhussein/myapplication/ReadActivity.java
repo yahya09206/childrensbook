@@ -114,29 +114,30 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                                            int position, long id) {
                     Object item = adapterView.getItemAtPosition(position);
                     if (item != null) {
-                        //Toast.makeText(ReadActivity.this, "language : " + item.toString(),
-                                //Toast.LENGTH_SHORT).show();
-                        language = item.toString();
+                        String language2 = item.toString();
 
                         List<State> lg = db.statesDao().getAllStates();
-                        if(!language.equals(lg.get(0).getReaderLanguage())) {
-                            Toast.makeText(ReadActivity.this, "switching to : " + item.toString(),
-                                    Toast.LENGTH_SHORT).show();
-
-                            //update language value
-                            if(lg != null) {
+                        //update language value
+                        if (lg != null) {
+                            if(language2.equals("Lang")){
+                                return;
+                            }
+                            else{
+                                language = language2;
                                 lg.get(0).setReaderLanguage(language);
                                 updateDatabase(lg.get(0));
+                                Toast.makeText(ReadActivity.this, "switching to : " + language,
+                                        Toast.LENGTH_SHORT).show();
                             }
-
-                            Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
-                            intent.putExtra("Id", id2);
-                            intent.putExtra("Sound", sound);
-                            intent.putExtra("Section", section);
-                            intent.putExtra("Language", language);
-                            intent.putExtra("Bookmark", bookmark);
-                            getApplication().startActivity(intent);
                         }
+
+                        Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+                        intent.putExtra("Id", id2);
+                        intent.putExtra("Sound", sound);
+                        intent.putExtra("Section", section);
+                        intent.putExtra("Language", language);
+                        intent.putExtra("Bookmark", bookmark);
+                        getApplication().startActivity(intent);
                     }
                 }
 
@@ -154,29 +155,29 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                                            int position, long id) {
                     Object item = adapterView.getItemAtPosition(position);
                     if (item != null) {
-                        //Toast.makeText(ReadActivity.this, "sound is : " + item.toString(),
-                                //Toast.LENGTH_SHORT).show();
-                        sound = item.toString();
+                        String sound2 = item.toString();
 
                         List<State> sd = db.statesDao().getAllStates();
-                        if(!sound.equals(sd.get(0).getSoundStatus())) {
-                            Toast.makeText(ReadActivity.this, "turning sound : " + item.toString(),
-                                    Toast.LENGTH_SHORT).show();
-
-                            //update sound status
-                            if(sd != null) {
+                        //update sound status
+                        if (sd != null) {
+                            if(sound2.equals("Sound")) {
+                                return;
+                            }else{
+                                sound = sound2;
                                 sd.get(0).setSoundStatus(sound);
                                 updateDatabase(sd.get(0));
+                                Toast.makeText(ReadActivity.this, "turning sound : " + sound,
+                                        Toast.LENGTH_SHORT).show();
                             }
-
-                            Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
-                            intent.putExtra("Id", id2);
-                            intent.putExtra("Sound", sound);
-                            intent.putExtra("Section", section);
-                            intent.putExtra("Language", language);
-                            intent.putExtra("Bookmark", bookmark);
-                            getApplication().startActivity(intent);
                         }
+
+                        Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
+                        intent.putExtra("Id", id2);
+                        intent.putExtra("Sound", sound);
+                        intent.putExtra("Section", section);
+                        intent.putExtra("Language", language);
+                        intent.putExtra("Bookmark", bookmark);
+                        getApplication().startActivity(intent);
                     }
                 }
 
@@ -224,13 +225,15 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     son.setVisibility(View.GONE);
                     tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
-                    mp.start();
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        public void onCompletion(MediaPlayer mp) {
-                            finish(); // finish current activity
-                            Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    if(sound.equals("On")) {
+                        mp.start();
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                finish(); // finish current activity
+                                Toast.makeText(getApplicationContext(), "End of sound!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                     running = true;
                 }
             });
@@ -263,7 +266,9 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             pause.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
-                    mp.pause();
+                    if(mp.isPlaying()) {
+                        mp.pause();
+                    }
                     play.setVisibility(View.VISIBLE);
                     pause.setVisibility(View.GONE);
                     running = false;
