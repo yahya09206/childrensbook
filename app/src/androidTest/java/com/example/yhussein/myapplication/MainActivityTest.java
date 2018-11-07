@@ -38,6 +38,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.yhussein.myapplication.MyViewAction.clickChildViewWithId;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
@@ -61,7 +62,7 @@ public class MainActivityTest {
     }*/
 
     @Test
-    public void TestIntent(){
+    public void TestStateIntent(){
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
         intent.putExtra("Bookmark", 0);
@@ -72,15 +73,20 @@ public class MainActivityTest {
     }
 
     @Test
-    public void TestReadIntent(){
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        Intent intent = new Intent();
-        intent.putExtra("Id", 1);
-        intent.putExtra("Bookmark", 0);
-        intent.putExtra("Language", "english");
-        intent.putExtra("Sound", "On");
-        Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+    public void TestBookEntity() throws Exception {
+        Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
+                "0", "english", "On",
+                "1", "audio1_english.mp3", "book1_english.txt", 1);
+        assertThat(1, equalTo(setting.getBookId()));
+        assertThat("Great Book Title 1", equalTo(setting.getBookTitle().toString()));
+        assertThat("Mekone Tolrom", equalTo(setting.getBookAuthor().toString()));
+        assertThat("mekone", equalTo(setting.getReaderName().toString()));
+        assertThat("0", equalTo(setting.getBookMark().toString()));
+        assertThat("english", equalTo(setting.getReadingLanguage().toString()));
+        assertThat("On", equalTo(setting.getSoundStatus().toString()));
+        assertThat("audio1_english.mp3", equalTo(setting.getAudioUrl().toString()));
+        assertThat("book1_english.txt", equalTo(setting.getContentUrl().toString()));
+        assertThat(1, equalTo(setting.getLikeCount()));
     }
 
     @Test
@@ -89,6 +95,8 @@ public class MainActivityTest {
                 .check(matches(withText("Great Book Title 1")));
         onView(withIndex(withId(R.id.book_author_id), 0))
                 .check(matches(withText("by Mekone Tolrom")));
+        onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
+        //click
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
