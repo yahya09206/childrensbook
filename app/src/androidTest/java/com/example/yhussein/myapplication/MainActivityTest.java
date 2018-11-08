@@ -31,6 +31,7 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -40,6 +41,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.yhussein.myapplication.MyViewAction.clickChildViewWithId;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -159,7 +161,9 @@ public class MainActivityTest {
                 .check(matches(withText("by Mekone Tolrom")));
         onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
 
-        onView(withIndex(withId(R.id.book_img_id), 1)).perform(click());
+        //onData(anything()).inAdapterView(withId(R.id.recyclerView_id)).atPosition(0).perform(click());
+        //onView(withIndex(withId(R.id.book_img_id), 0)).perform(scrollTo()).perform(click());
+        onView(withText("Great Book Title 1")).perform(click());
 
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
         //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
