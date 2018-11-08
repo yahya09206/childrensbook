@@ -68,6 +68,15 @@ public class MainActivityTest {
     }*/
 
     @Test
+    public void TestLibrary(){
+        onView(withIndex(withId(R.id.book_title_id), 0))
+                .check(matches(withText("Great Book Title 1")));
+        onView(withIndex(withId(R.id.book_author_id), 0))
+                .check(matches(withText("by Mekone Tolrom")));
+        onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void TestStateIntent(){
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
@@ -155,16 +164,7 @@ public class MainActivityTest {
 
     @Test
     public void testNavigateToReading() {
-        onView(withIndex(withId(R.id.book_title_id), 0))
-                .check(matches(withText("Great Book Title 1")));
-        onView(withIndex(withId(R.id.book_author_id), 0))
-                .check(matches(withText("by Mekone Tolrom")));
-        onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
-
-        //onData(anything()).inAdapterView(withId(R.id.recyclerView_id)).atPosition(0).perform(click());
-        //onView(withIndex(withId(R.id.book_img_id), 0)).perform(scrollTo()).perform(click());
-        onView(withText("Great Book Title 1")).perform(click());
-
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
         //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
