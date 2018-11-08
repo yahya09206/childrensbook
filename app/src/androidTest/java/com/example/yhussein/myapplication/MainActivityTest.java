@@ -31,6 +31,7 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -163,10 +164,40 @@ public class MainActivityTest {
     }
 
     @Test
+    public void TestSetBookEntity() throws Exception {
+        Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
+                "0", "english", "On",
+                "1", "audio1_english.mp3", "book1_english.txt", 1);
+        setting.setAudioUrl("");
+        setting.setContentUrl("");
+        setting.setSoundStatus("");
+        setting.setReadingLanguage("");
+        setting.setBookMark("");
+        setting.setReaderName("");
+        setting.setBookAuthor("");
+        setting.setBookTitle("");
+        setting.setBookId(1);
+        setting.setPhotoId("");
+        setting.setLikeCount(0);
+
+        assertThat(1, equalTo(setting.getBookId()));
+        assertThat("", equalTo(setting.getBookTitle().toString()));
+        assertThat("", equalTo(setting.getBookAuthor().toString()));
+        assertThat("", equalTo(setting.getReaderName().toString()));
+        assertThat("", equalTo(setting.getBookMark().toString()));
+        assertThat("", equalTo(setting.getReadingLanguage().toString()));
+        assertThat("", equalTo(setting.getSoundStatus().toString()));
+        assertThat("", equalTo(setting.getAudioUrl().toString()));
+        assertThat("", equalTo(setting.getContentUrl().toString()));
+        assertThat(0, equalTo(setting.getLikeCount()));
+    }
+
+    @Test
     public void testNavigateToReading() {
         onView(withIndex(withId(R.id.book_img_id), 0)).check(matches(isDisplayed()));
+        onView(withIndex(withId(R.id.book_title_id), 0)).perform(closeSoftKeyboard());
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).check(matches(isDisplayed()));
         onView(withId(R.id.next)).check(matches(isDisplayed()));
