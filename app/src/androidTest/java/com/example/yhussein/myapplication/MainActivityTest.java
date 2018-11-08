@@ -164,8 +164,8 @@ public class MainActivityTest {
 
     @Test
     public void testNavigateToReading() {
+        onView(withIndex(withId(R.id.book_img_id), 0)).check(matches(isDisplayed()));
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
         //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).check(matches(isDisplayed()));
