@@ -27,6 +27,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -36,10 +37,13 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.yhussein.myapplication.MyViewAction.clickChildViewWithId;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
@@ -73,7 +77,46 @@ public class MainActivityTest {
     }
 
     @Test
-    public void TestGetBookEntity() throws Exception {
+    public void TestLanguageChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withId(R.id.lang)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void TestSoundChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withId(R.id.son)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void TestBookEntity() throws Exception {
         Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
                 "0", "english", "On",
                 "1", "audio1_english.mp3", "book1_english.txt", 1);
@@ -90,35 +133,6 @@ public class MainActivityTest {
     }
 
     @Test
-    public void TestSetBookEntity() throws Exception {
-        Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
-                "0", "english", "On",
-                "1", "audio1_english.mp3", "book1_english.txt", 1);
-        setting.setAudioUrl("");
-        setting.setContentUrl("");
-        setting.setSoundStatus("");
-        setting.setReadingLanguage("");
-        setting.setBookMark("");
-        setting.setReaderName("");
-        setting.setBookAuthor("");
-        setting.setBookTitle("");
-        setting.setBookId(1);
-        setting.setPhotoId("");
-        setting.setLikeCount(0);
-
-        assertThat(1, equalTo(setting.getBookId()));
-        assertThat("", equalTo(setting.getBookTitle().toString()));
-        assertThat("", equalTo(setting.getBookAuthor().toString()));
-        assertThat("", equalTo(setting.getReaderName().toString()));
-        assertThat("", equalTo(setting.getBookMark().toString()));
-        assertThat("", equalTo(setting.getReadingLanguage().toString()));
-        assertThat("", equalTo(setting.getSoundStatus().toString()));
-        assertThat("", equalTo(setting.getAudioUrl().toString()));
-        assertThat("", equalTo(setting.getContentUrl().toString()));
-        assertThat(0, equalTo(setting.getLikeCount()));
-    }
-
-    @Test
     public void testNavigateToReading() {
         onView(withIndex(withId(R.id.book_title_id), 0))
                 .check(matches(withText("Great Book Title 1")));
@@ -128,24 +142,22 @@ public class MainActivityTest {
         //click
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).check(matches(isDisplayed()));
         onView(withId(R.id.next)).check(matches(isDisplayed()));
         onView(withId(R.id.prev)).check(matches(isDisplayed()));
-        onView(withId(R.id.play)).check(matches(isDisplayed()));
-        //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
+        onView(withId(R.id.play)).check(matches(isDisplayed()));;
         onView(withId(R.id.play)).perform(click());
         onView(withId(R.id.book_img_id)).perform(click());
         onView(withId(R.id.next)).perform(click());
         onView(withId(R.id.prev)).perform(click());
-        //onView(withText("Welcome back! You have 2 books!")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withId(R.id.close)).perform(click());
     }
 
     @Test
     public void testPOJO() {
         onView(withId(R.id.recyclerView_id)).check(new Matchers(2));
-        //onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
     }
 
     @Test
