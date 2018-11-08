@@ -46,6 +46,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
     String pix;
     boolean running = false;
     private AppDatabase db;
+    private ScrollView sc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
