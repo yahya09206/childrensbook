@@ -73,7 +73,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void TestBookEntity() throws Exception {
+    public void TestGetBookEntity() throws Exception {
         Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
                 "0", "english", "On",
                 "1", "audio1_english.mp3", "book1_english.txt", 1);
@@ -87,6 +87,35 @@ public class MainActivityTest {
         assertThat("audio1_english.mp3", equalTo(setting.getAudioUrl().toString()));
         assertThat("book1_english.txt", equalTo(setting.getContentUrl().toString()));
         assertThat(1, equalTo(setting.getLikeCount()));
+    }
+
+    @Test
+    public void TestSetBookEntity() throws Exception {
+        Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
+                "0", "english", "On",
+                "1", "audio1_english.mp3", "book1_english.txt", 1);
+        setting.setAudioUrl("");
+        setting.setContentUrl("");
+        setting.setSoundStatus("");
+        setting.setReadingLanguage("");
+        setting.setBookMark("");
+        setting.setReaderName("");
+        setting.setBookAuthor("");
+        setting.setBookTitle("");
+        setting.setBookId(1);
+        setting.setPhotoId("");
+        setting.setLikeCount(0);
+
+        assertThat(1, equalTo(setting.getBookId()));
+        assertThat("", equalTo(setting.getBookTitle().toString()));
+        assertThat("", equalTo(setting.getBookAuthor().toString()));
+        assertThat("", equalTo(setting.getReaderName().toString()));
+        assertThat("", equalTo(setting.getBookMark().toString()));
+        assertThat("", equalTo(setting.getReadingLanguage().toString()));
+        assertThat("", equalTo(setting.getSoundStatus().toString()));
+        assertThat("", equalTo(setting.getAudioUrl().toString()));
+        assertThat("", equalTo(setting.getContentUrl().toString()));
+        assertThat(0, equalTo(setting.getLikeCount()));
     }
 
     @Test
