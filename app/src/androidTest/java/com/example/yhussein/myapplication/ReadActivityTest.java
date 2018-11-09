@@ -80,7 +80,7 @@ public class ReadActivityTest {
         onView(withId(R.id.play)).perform(click());
         onView(withId(R.id.book_img_id)).perform(click());
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
-        onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
+        //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).perform(click());
     }
 
