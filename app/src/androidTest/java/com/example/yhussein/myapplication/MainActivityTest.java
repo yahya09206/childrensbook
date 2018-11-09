@@ -192,21 +192,10 @@ public class MainActivityTest {
         assertThat(0, equalTo(setting.getLikeCount()));
     }
 
-    @Test
+    /*@Test
     public void testNavigateToReading() {
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        /*onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
-        onView(withId(R.id.lang)).check(matches(isDisplayed()));
-        onView(withId(R.id.close)).check(matches(isDisplayed()));
-        onView(withId(R.id.next)).check(matches(isDisplayed()));
-        onView(withId(R.id.prev)).check(matches(isDisplayed()));
-        onView(withId(R.id.play)).check(matches(isDisplayed()));;
-        onView(withId(R.id.play)).perform(click());
-        onView(withId(R.id.book_img_id)).perform(click());
-        onView(withId(R.id.next)).perform(click());
-        onView(withId(R.id.prev)).perform(click());
-        onView(withId(R.id.close)).perform(click());*/
-    }
+    }*/
 
     @Test
     public void testPOJO() {
