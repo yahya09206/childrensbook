@@ -1,8 +1,11 @@
 package com.example.yhussein.myapplication;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
@@ -11,6 +14,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +24,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -53,6 +58,18 @@ public class ReadActivityTest {
         }
     };
 
+    /*@Before
+    public void TestIntent2() {
+        Intent intent = new Intent();
+        intent.putExtra("Language", "english");
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
+
+        intending(allOf(
+                hasExtra("Language", "english"),
+                hasAction(Intent.ACTION_PICK))
+        ).respondWith(result);
+    }*/
+
     @Test
     public void useAppContext() {
         // Context of the app under test.
@@ -80,7 +97,6 @@ public class ReadActivityTest {
         onView(withId(R.id.play)).perform(click());
         onView(withId(R.id.book_img_id)).perform(click());
         onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
-        //onView(withId(R.id.txtDesc)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).perform(click());
     }
 

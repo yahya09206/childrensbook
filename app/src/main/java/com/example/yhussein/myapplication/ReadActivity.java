@@ -103,7 +103,11 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 tvdescription.setText("[" + bookmark + "/" + st.size() + " - " + language + "] " + paragraphs.get(bookmark));
             }
 
-            play.setVisibility(View.VISIBLE);
+            if(sound.equals("On")) {
+                play.setVisibility(View.VISIBLE);
+            }else{
+                play.setVisibility(View.GONE);
+            }
             prev.setVisibility(View.VISIBLE);
             pause.setVisibility(View.GONE);
             next.setVisibility(View.VISIBLE);
@@ -207,7 +211,11 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                         pause.setVisibility(View.VISIBLE);
                     }
                     else {
-                        play.setVisibility(View.VISIBLE);
+                        if(sound.equals("On")) {
+                            play.setVisibility(View.VISIBLE);
+                        }else{
+                            play.setVisibility(View.GONE);
+                        }
                     }
                     next.setVisibility(View.VISIBLE);
                     prev.setVisibility(View.VISIBLE);
