@@ -74,6 +74,24 @@ public class ReadActivityTest {
     }
 
     @Test
+    public void TestImageclick(){
+        onView(withId(R.id.book_img_id)).perform(click());
+        onView(withId(R.id.play)).check(matches(isDisplayed()));
+        onView(withId(R.id.son)).check(matches(isDisplayed()));
+        onView(withId(R.id.prev)).check(matches(isDisplayed()));
+        onView(withId(R.id.lang)).check(matches(isDisplayed()));
+        onView(withId(R.id.next)).check(matches(isDisplayed()));
+        onView(withId(R.id.close)).check(matches(isDisplayed()));
+    }
+
+    /*@Test
+    public  void TestBundleReception(){
+        int section = 1;
+        onView(withId(R.id.next)).perform(click());
+        assertEquals(section, section + 1);
+    }*/
+
+    @Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();

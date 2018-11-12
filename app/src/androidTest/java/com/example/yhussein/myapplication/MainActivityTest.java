@@ -188,6 +188,22 @@ public class MainActivityTest {
     }
 
     @Test
+    public void TestSetStateEntity() throws Exception {
+        State state = new State();
+        state.setSoundStatus("On");
+        state.setReaderLanguage("french");
+        state.setReaderIp("");
+        state.setStateId(1);
+        state.setBookMark(0);
+
+        assertThat(1, equalTo(state.getStateId()));
+        assertThat("On", equalTo(state.getSoundStatus()));
+        assertThat("french", equalTo(state.getReaderLanguage()));
+        assertThat("", equalTo(state.getReaderIp()));
+        assertThat(0, equalTo(state.getBookMark()));
+    }
+
+    @Test
     public void testPOJO() {
         onView(withId(R.id.recyclerView_id)).check(new Matchers(2));
     }
