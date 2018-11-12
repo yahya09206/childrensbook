@@ -200,7 +200,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 public void onClick(View v) {
                     // Code here executes on main thread after user presses button
                     mp.stop();
-                    Intent intent = new Intent(v.getContext(), PaneActivity.class);
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
             });
