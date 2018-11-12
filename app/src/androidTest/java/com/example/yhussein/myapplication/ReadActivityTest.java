@@ -56,13 +56,21 @@ public class ReadActivityTest {
             intent.putExtra("Section", 0);
             intent.putExtra("Language", "english");
             intent.putExtra("Bookmark", 1);
+
             return intent;
         }
     };
 
     @Test
     public void TestRecIntent(){
-
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+        Bundle extras = intent.getExtras();
+        int id = extras.getInt(Intent.EXTRA_TEXT);
     }
 
     @Test
