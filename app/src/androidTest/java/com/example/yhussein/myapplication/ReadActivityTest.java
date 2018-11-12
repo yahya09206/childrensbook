@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
@@ -34,6 +35,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
@@ -58,17 +60,10 @@ public class ReadActivityTest {
         }
     };
 
-    /*@Before
-    public void TestIntent2() {
-        Intent intent = new Intent();
-        intent.putExtra("Language", "english");
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
+    @Test
+    public void TestRecIntent(){
 
-        intending(allOf(
-                hasExtra("Language", "english"),
-                hasAction(Intent.ACTION_PICK))
-        ).respondWith(result);
-    }*/
+    }
 
     @Test
     public void useAppContext() {

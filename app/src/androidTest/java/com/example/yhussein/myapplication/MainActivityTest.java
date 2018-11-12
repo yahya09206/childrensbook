@@ -63,11 +63,6 @@ public class MainActivityTest {
         assertEquals("com.example.yhussein.myapplication", appContext.getPackageName());
     }
 
-    /*@Test
-    public void TestToastDisplay(){
-        onView(withText("Welcome back! You have 2 books!")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-    }*/
-
     @Test
     public void TestLibrary(){
         onView(withIndex(withId(R.id.book_title_id), 0))
@@ -191,11 +186,6 @@ public class MainActivityTest {
         assertThat("", equalTo(setting.getContentUrl().toString()));
         assertThat(0, equalTo(setting.getLikeCount()));
     }
-
-    /*@Test
-    public void testNavigateToReading() {
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-    }*/
 
     @Test
     public void testPOJO() {
