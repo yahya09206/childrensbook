@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
@@ -17,11 +18,15 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.ref.WeakReference;
+
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.filters.LargeTest;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -37,7 +42,9 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.example.yhussein.myapplication.MainActivityTest.withIndex;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
@@ -54,6 +61,15 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.toPack
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ReadActivityTest {
+
+    //public Activity activity =  getClass().con;
+    //public ReadActivityTest (Activity act)
+    //{
+      //  this.activity = act;
+        // Now here you can get getApplication()
+    //}
+
+    /*
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule =
             new IntentsTestRule<>(MainActivity.class);
@@ -76,6 +92,81 @@ public class ReadActivityTest {
             return intent;
         }
     };
+
+    @Test
+    public void TestNextChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.next), 0)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void TestPreviousChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.prev), 0)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void TestPlayChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.play), 0)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void TestImagebutton(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
 
     @Test
     public void TestRecIntent(){
@@ -183,5 +274,24 @@ public class ReadActivityTest {
         //validate intent and check its data
         int bookmark = intent.getExtras().getInt("Bookmark");
         assertEquals(bookmark, 1);
+    }
+*/
+    @Test
+    public void TestUpdateStateEntity() throws Exception {
+        State state = new State();
+        state.setSoundStatus("On");
+        state.setReaderLanguage("french");
+        state.setReaderIp("");
+        state.setStateId(1);
+        state.setBookMark(0);
+
+        //AppDatabase db = AppDatabase.getAppDatabase(getApplicationContext());
+        //db.statesDao().updateStates(state);
+
+        Assert.assertThat(1, equalTo(state.getStateId()));
+        Assert.assertThat("On", equalTo(state.getSoundStatus()));
+        Assert.assertThat("french", equalTo(state.getReaderLanguage()));
+        Assert.assertThat("", equalTo(state.getReaderIp()));
+        Assert.assertThat(0, equalTo(state.getBookMark()));
     }
 }
