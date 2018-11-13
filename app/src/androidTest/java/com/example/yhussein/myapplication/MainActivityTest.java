@@ -142,6 +142,44 @@ public class MainActivityTest {
     }
 
     @Test
+    public void TestNextChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.next), 0)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void TestPlayChange(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.play), 0)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
     public void TestBookEntity() throws Exception {
         Setting setting = new Setting(1, "Great Book Title 1", "Mekone Tolrom", "mekone",
                 "0", "english", "On",
