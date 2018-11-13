@@ -5,13 +5,16 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.util.HumanReadables;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 import android.view.View;
 
 import org.junit.Before;
@@ -19,12 +22,18 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.filters.LargeTest;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import static android.provider.ContactsContract.Directory.PACKAGE_NAME;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasShortClassName;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -34,6 +43,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
@@ -41,8 +51,16 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasDat
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 
+@LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ReadActivityTest {
+    @Rule
+    public IntentsTestRule<MainActivity> intentsTestRule =
+            new IntentsTestRule<>(MainActivity.class);
+
+    public IntentsTestRule<ReadActivity> mIntentsRule =
+            new IntentsTestRule<>(ReadActivity.class);
+
     @Rule
     public ActivityTestRule<ReadActivity> activityTestRule
             = new ActivityTestRule<ReadActivity>(ReadActivity.class) {
@@ -54,21 +72,46 @@ public class ReadActivityTest {
             intent.putExtra("Section", 0);
             intent.putExtra("Language", "english");
             intent.putExtra("Bookmark", 1);
+
             return intent;
         }
     };
 
-    /*@Before
-    public void TestIntent2() {
+    @Test
+    public void TestRecIntent(){
         Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
         intent.putExtra("Language", "english");
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
+        intent.putExtra("Bookmark", 1);
+        Bundle extras = intent.getExtras();
+        int id = extras.getInt(Intent.EXTRA_TEXT);
+    }
 
-        intending(allOf(
-                hasExtra("Language", "english"),
-                hasAction(Intent.ACTION_PICK))
-        ).respondWith(result);
-    }*/
+    @Test
+    public void TestImageclick(){
+        onView(withId(R.id.book_img_id)).perform(click());
+        onView(withId(R.id.play)).check(matches(isDisplayed()));
+        onView(withId(R.id.son)).check(matches(isDisplayed()));
+        onView(withId(R.id.prev)).check(matches(isDisplayed()));
+        onView(withId(R.id.lang)).check(matches(isDisplayed()));
+        onView(withId(R.id.next)).check(matches(isDisplayed()));
+        onView(withId(R.id.close)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testIntents() {
+        //from ActivityA, click the button which starts the ActivityB
+        onView(withText("NEXT")).perform(click());
+
+        //validate intent and check its data
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Sound", "On")
+        ));
+    }
+
 
     @Test
     public void useAppContext() {

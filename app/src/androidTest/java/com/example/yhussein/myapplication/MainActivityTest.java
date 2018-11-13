@@ -63,11 +63,6 @@ public class MainActivityTest {
         assertEquals("com.example.yhussein.myapplication", appContext.getPackageName());
     }
 
-    /*@Test
-    public void TestToastDisplay(){
-        onView(withText("Welcome back! You have 2 books!")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-    }*/
-
     @Test
     public void TestLibrary(){
         onView(withIndex(withId(R.id.book_title_id), 0))
@@ -192,10 +187,21 @@ public class MainActivityTest {
         assertThat(0, equalTo(setting.getLikeCount()));
     }
 
-    /*@Test
-    public void testNavigateToReading() {
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-    }*/
+    @Test
+    public void TestSetStateEntity() throws Exception {
+        State state = new State();
+        state.setSoundStatus("On");
+        state.setReaderLanguage("french");
+        state.setReaderIp("");
+        state.setStateId(1);
+        state.setBookMark(0);
+
+        assertThat(1, equalTo(state.getStateId()));
+        assertThat("On", equalTo(state.getSoundStatus()));
+        assertThat("french", equalTo(state.getReaderLanguage()));
+        assertThat("", equalTo(state.getReaderIp()));
+        assertThat(0, equalTo(state.getBookMark()));
+    }
 
     @Test
     public void testPOJO() {
