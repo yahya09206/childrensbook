@@ -217,22 +217,52 @@ public class ReadActivityTest {
     public void TestLanguageIntents() {
         onView(withId(R.id.lang)).perform(click());
         onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+
         Intent intent = new Intent();
-        intent.putExtra("Language", "english");
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "french");
+        intent.putExtra("Bookmark", 1);
+
         //validate intent and check its data
+        int id = intent.getExtras().getInt("Id");
+        String sound = intent.getExtras().getString("Sound");
+        int section = intent.getExtras().getInt("Section");
         String language = intent.getExtras().getString("Language");
-        assertEquals(language, "english");
+        int bookmark = intent.getExtras().getInt("Bookmark");
+
+        assertEquals(id, 1);
+        assertEquals(sound, "On");
+        assertEquals(section, 0);
+        assertEquals(language, "french");
+        assertEquals(bookmark, 1);
     }
 
     @Test
     public void TestSoundIntents() {
         onView(withId(R.id.son)).perform(click());
         onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+
         Intent intent = new Intent();
+        intent.putExtra("Id", 1);
         intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "french");
+        intent.putExtra("Bookmark", 1);
+
         //validate intent and check its data
+        int id = intent.getExtras().getInt("Id");
         String sound = intent.getExtras().getString("Sound");
+        int section = intent.getExtras().getInt("Section");
+        String language = intent.getExtras().getString("Language");
+        int bookmark = intent.getExtras().getInt("Bookmark");
+
+        assertEquals(id, 1);
         assertEquals(sound, "On");
+        assertEquals(section, 0);
+        assertEquals(language, "french");
+        assertEquals(bookmark, 1);
     }
 
     @Test
