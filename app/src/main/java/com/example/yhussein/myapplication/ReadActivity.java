@@ -130,6 +130,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                                 return;
                             }
                             else{
+                                mp.stop();
                                 language = language2;
                                 lg.get(0).setReaderLanguage(language);
                                 updateDatabase(lg.get(0));
@@ -151,8 +152,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // TODO Auto-generated method stub
-                    //List<State> lg = db.statesDao().getAllStates();
-                    //lang.setSelection(((ArrayAdapter)lang.getAdapter()).getPosition(lg.get(0).getReaderLanguage()));
                 }
             });
 
@@ -170,6 +169,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                             if(sound2.equals("Sound")) {
                                 return;
                             }else{
+                                mp.stop();
                                 sound = sound2;
                                 sd.get(0).setSoundStatus(sound);
                                 updateDatabase(sd.get(0));
@@ -191,8 +191,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // TODO Auto-generated method stub
-                    //List<State> sd = db.statesDao().getAllStates();
-                    //son.setSelection(((ArrayAdapter)son.getAdapter()).getPosition(sd.get(0).getSoundStatus()));
                 }
             });
 
