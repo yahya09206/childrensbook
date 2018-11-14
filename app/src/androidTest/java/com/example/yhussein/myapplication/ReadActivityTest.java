@@ -61,7 +61,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.toPack
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ReadActivityTest {
-    
+
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule =
             new IntentsTestRule<>(MainActivity.class);
