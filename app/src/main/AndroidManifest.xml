@@ -22,9 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReadActivity" />
-
-        <meta-data
-            android:name="com.google.android.actions" />
     </application>
 
 </manifest>
