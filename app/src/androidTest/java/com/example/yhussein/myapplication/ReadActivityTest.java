@@ -24,37 +24,24 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.ref.WeakReference;
-
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.filters.LargeTest;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import static android.provider.ContactsContract.Directory.PACKAGE_NAME;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasShortClassName;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.example.yhussein.myapplication.MainActivityTest.withIndex;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 
@@ -252,9 +239,23 @@ public class ReadActivityTest {
     public void TestNextIntents() {
         onView(withId(R.id.next)).perform(click());
         Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "french");
         intent.putExtra("Bookmark", 1);
+
         //validate intent and check its data
+        int id = intent.getExtras().getInt("Id");
+        String sound = intent.getExtras().getString("Sound");
+        int section = intent.getExtras().getInt("Section");
+        String language = intent.getExtras().getString("Language");
         int bookmark = intent.getExtras().getInt("Bookmark");
+
+        assertEquals(id, 1);
+        assertEquals(sound, "On");
+        assertEquals(section, 0);
+        assertEquals(language, "french");
         assertEquals(bookmark, 1);
     }
 
@@ -262,9 +263,23 @@ public class ReadActivityTest {
     public void TestPreviousIntents() {
         onView(withId(R.id.prev)).perform(click());
         Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
         intent.putExtra("Bookmark", 1);
+
         //validate intent and check its data
+        int id = intent.getExtras().getInt("Id");
+        String sound = intent.getExtras().getString("Sound");
+        int section = intent.getExtras().getInt("Section");
+        String language = intent.getExtras().getString("Language");
         int bookmark = intent.getExtras().getInt("Bookmark");
+
+        assertEquals(id, 1);
+        assertEquals(sound, "On");
+        assertEquals(section, 0);
+        assertEquals(language, "english");
         assertEquals(bookmark, 1);
     }
 
@@ -276,9 +291,6 @@ public class ReadActivityTest {
         state.setReaderIp("");
         state.setStateId(1);
         state.setBookMark(0);
-
-        //AppDatabase db = AppDatabase.getAppDatabase(getApplicationContext());
-        //db.statesDao().updateStates(state);
 
         Assert.assertThat(1, equalTo(state.getStateId()));
         Assert.assertThat("On", equalTo(state.getSoundStatus()));
