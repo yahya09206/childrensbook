@@ -130,7 +130,9 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                                 return;
                             }
                             else{
-                                mp.stop();
+                                if(mp.isPlaying()) {
+                                    mp.stop();
+                                }
                                 language = language2;
                                 lg.get(0).setReaderLanguage(language);
                                 updateDatabase(lg.get(0));
@@ -169,7 +171,9 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                             if(sound2.equals("Sound")) {
                                 return;
                             }else{
-                                mp.stop();
+                                if(mp.isPlaying()) {
+                                    mp.stop();
+                                }
                                 sound = sound2;
                                 sd.get(0).setSoundStatus(sound);
                                 updateDatabase(sd.get(0));
