@@ -248,7 +248,7 @@ public class ReadActivityTest {
         onView(withId(R.id.son)).perform(click());
         //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("On"))).perform(click());
-        onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("On"))));
+        onView(withId(R.id.son)).check(matches(withSpinnerText(containsString("On"))));
 
                 /*
         Intent intent = new Intent();
