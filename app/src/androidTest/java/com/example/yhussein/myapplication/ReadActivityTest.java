@@ -33,8 +33,10 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.yhussein.myapplication.MainActivityTest.withIndex;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -216,9 +218,11 @@ public class ReadActivityTest {
     @Test
     public void TestLanguageIntents() {
         onView(withId(R.id.lang)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
+        onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
 
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         intent.putExtra("Id", 1);
         intent.putExtra("Sound", "On");
         intent.putExtra("Section", 0);
@@ -236,14 +240,17 @@ public class ReadActivityTest {
         assertEquals(sound, "On");
         assertEquals(section, 0);
         assertEquals(language, "french");
-        assertEquals(bookmark, 1);
+        assertEquals(bookmark, 1);*/
     }
 
     @Test
     public void TestSoundIntents() {
         onView(withId(R.id.son)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("On"))).perform(click());
+        onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("On"))));
 
+                /*
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
         intent.putExtra("Sound", "On");
@@ -263,6 +270,7 @@ public class ReadActivityTest {
         assertEquals(section, 0);
         assertEquals(language, "french");
         assertEquals(bookmark, 1);
+        */
     }
 
     @Test
