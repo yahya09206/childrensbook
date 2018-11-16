@@ -104,6 +104,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 //set image and text values
                 img.setImageResource(pixId);
                 tvdescription.setText("[" + bookmark + "/" + st.size() + " - " + language + "] " + paragraphs.get(bookmark));
+                
             }
 
             if(sound.equals("On")) {
