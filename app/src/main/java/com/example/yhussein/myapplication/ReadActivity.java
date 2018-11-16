@@ -17,13 +17,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -93,7 +96,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             final Button pause = findViewById(R.id.pause);
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
-            final Spinner son = findViewById(R.id.son);
+            final Switch son = findViewById(R.id.son);
 
             final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
 
@@ -156,12 +159,12 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            son.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            son.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view,
-                                           int position, long id) {
-                    Object item = adapterView.getItemAtPosition(position);
-                    if (item != null) {
+
+                public void onCheckedChanged(CompoundButton adapterView, boolean isChecked) {
+                    Object item = adapterView;
+                    if (isChecked) {
                         String sound2 = item.toString();
 
                         List<State> sd = db.statesDao().getAllStates();
@@ -188,12 +191,12 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
 
-                @Override
+                /*@Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // TODO Auto-generated method stub
                     //List<State> sd = db.statesDao().getAllStates();
                     //son.setSelection(((ArrayAdapter)son.getAdapter()).getPosition(sd.get(0).getSoundStatus()));
-                }
+                }*/
             });
 
             close.setOnClickListener(new View.OnClickListener() {

@@ -20,8 +20,6 @@
     <string name="todo">TODO</string>
     <string name="matches_ryan_gosling">Ryan Gosling</string>
     <string name="read">read</string>
-    <string name="previous">Previous</string>
-    <string name="next">Next</string>
     <string name="save">SAVE</string>
     <string name="reset">RESET</string>
     <string name="home">HOME</string>
@@ -96,4 +94,10 @@
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="close">CLOSE</string>
+    <string name="play">PLAY</string>
+    <string name="pause">PAUSE</string>
+    <string name="previous">PREVIOUS</string>
+    <string name="next">NEXT</string>
+
 </resources>

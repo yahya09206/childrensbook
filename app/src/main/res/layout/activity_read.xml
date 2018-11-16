@@ -41,20 +41,23 @@
                         android:textColor="?attr/colorPrimary"
                         android:textSize="22sp" />
 
-                    <Spinner
+                    <Switch
                         android:id="@+id/son"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:entries="@array/sounds_array"
                         android:textColor="?attr/colorPrimary"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"
+                        android:checked="false"
+                        android:drawableStart="@drawable/ic_surround_sound_black_24dp"/>
 
                     <Button
                         android:id="@+id/close"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="X"
+                        android:drawableTop="@drawable/ic_close_black_24dp"
+                        android:text="@string/close"
                         android:textColor="?attr/colorAccent" />
                 </LinearLayout>
 
@@ -87,9 +90,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_skip_previous_black_24dp"
-                        android:text="PREVIOUS"
+                        android:text="@string/previous"
                         android:textColor="?attr/colorPrimary" />
 
                     <Button
@@ -97,9 +99,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawableTop="@drawable/ic_settings_black_24dp"
-                        android:text="PLAY"
+                        android:drawableTop="@drawable/ic_play_arrow_black_24dp"
+                        android:text="@string/play"
                         android:textColor="?attr/colorPrimary" />
 
                     <Button
@@ -107,9 +108,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawableTop="@drawable/ic_settings_black_24dp"
-                        android:text="PAUSE"
+                        android:drawableTop="@drawable/ic_pause_black_24dp"
+                        android:text="@string/pause"
                         android:textColor="?attr/colorPrimary" />
 
                     <Button
@@ -117,9 +117,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_skip_next_black_24dp"
-                        android:text="NEXT"
+                        android:text="@string/next"
                         android:textColor="?attr/colorPrimary" />
                 </LinearLayout>
 
@@ -128,7 +127,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/card_view">
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
