@@ -182,6 +182,22 @@ public class ReadActivityTest {
                 toPackage("com.example.yhussein.myapplication"),
                 hasExtra("Sound", "On")
         ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Language", "english")
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Id", 1)
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Section", 0)
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Bookmark", 1)
+        ));
     }
 
 
