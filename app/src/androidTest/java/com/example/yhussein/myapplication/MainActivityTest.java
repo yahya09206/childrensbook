@@ -80,7 +80,7 @@ public class MainActivityTest {
         intent.putExtra("Language", "english");
         intent.putExtra("Sound", "On");
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class MainActivityTest {
         intent.putExtra("Bookmark", 1);
 
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
     }
@@ -116,7 +116,7 @@ public class MainActivityTest {
         intent.putExtra("Bookmark", 1);
 
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
