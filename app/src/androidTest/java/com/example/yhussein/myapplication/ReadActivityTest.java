@@ -31,6 +31,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
@@ -82,6 +83,8 @@ public class ReadActivityTest {
         Bundle b = intent.getExtras();
         String language = b.getString("Language");
         assertEquals(language, "english");
+        intended(hasComponent(ReadActivity.class.getName()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -91,6 +94,8 @@ public class ReadActivityTest {
         Bundle b = intent.getExtras();
         String language = b.getString("Sound");
         assertEquals(language, "On");
+        intended(hasComponent(ReadActivity.class.getName()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
     }
 
     @Test
