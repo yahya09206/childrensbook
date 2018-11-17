@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_image_height"
                 android:background="#2d2d2d"
-                android:id="@+id/book_img_id"
+                android:id="@+id/book_img_id_read"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/todo" />
 

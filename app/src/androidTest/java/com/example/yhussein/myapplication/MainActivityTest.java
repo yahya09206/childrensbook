@@ -99,7 +99,7 @@ public class MainActivityTest {
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class MainActivityTest {
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
@@ -137,7 +137,7 @@ public class MainActivityTest {
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
@@ -156,7 +156,7 @@ public class MainActivityTest {
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
@@ -175,7 +175,7 @@ public class MainActivityTest {
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 

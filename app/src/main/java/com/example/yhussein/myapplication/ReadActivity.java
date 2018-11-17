@@ -56,7 +56,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_read);
         db = AppDatabase.getAppDatabase(getApplicationContext());
 
-        img = (ImageView) findViewById(R.id.book_img_id);
+        img = (ImageView) findViewById(R.id.book_img_id_read);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
         tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
@@ -86,7 +86,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             final int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
             final ArrayList<String> st = new ArrayList<>(paragraphs);
 
-            final ImageView imgButton = (ImageView) findViewById(R.id.book_img_id);
+            final ImageView imgButton = (ImageView) findViewById(R.id.book_img_id_read);
 
             final Button prev = findViewById(R.id.prev);
             final Button play = findViewById(R.id.play);

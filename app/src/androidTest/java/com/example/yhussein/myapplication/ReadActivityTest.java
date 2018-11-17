@@ -76,7 +76,7 @@ public class ReadActivityTest {
 
     @Test
     public void TestNextChange(){
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.book_img_id_read), 0)).perform(click());
         onView(withIndex(withId(R.id.next), 0)).perform(click());
 
         Intent intent = new Intent();
@@ -87,15 +87,15 @@ public class ReadActivityTest {
         intent.putExtra("Bookmark", 1);
 
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
     @Test
     public void TestPreviousChange(){
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.book_img_id_read), 0)).perform(click());
         onView(withIndex(withId(R.id.prev), 0)).perform(click());
 
         Intent intent = new Intent();
@@ -106,15 +106,15 @@ public class ReadActivityTest {
         intent.putExtra("Bookmark", 1);
 
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
     @Test
     public void TestPlayChange(){
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.book_img_id_read), 0)).perform(click());
         onView(withIndex(withId(R.id.play), 0)).perform(click());
 
         Intent intent = new Intent();
@@ -125,15 +125,15 @@ public class ReadActivityTest {
         intent.putExtra("Bookmark", 1);
 
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
     @Test
     public void TestImagebutton(){
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withIndex(withId(R.id.book_img_id_read), 0)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
@@ -143,9 +143,9 @@ public class ReadActivityTest {
         intent.putExtra("Bookmark", 1);
 
         Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(MainActivity.RESULT_OK, intent);
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
     }
 
@@ -163,7 +163,7 @@ public class ReadActivityTest {
 
     @Test
     public void TestImageclick(){
-        onView(withId(R.id.book_img_id)).perform(click());
+        onView(withId(R.id.book_img_id_read)).perform(click());
         onView(withId(R.id.play)).check(matches(isDisplayed()));
         onView(withId(R.id.son)).check(matches(isDisplayed()));
         onView(withId(R.id.prev)).check(matches(isDisplayed()));
@@ -176,7 +176,6 @@ public class ReadActivityTest {
     public void testIntentsSound() {
         //from ActivityA, click the button which starts the ActivityB
         onView(withId(R.id.son)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("On"))).perform(click());
         onView(withId(R.id.son)).check(matches(withSpinnerText(containsString("On"))));
 
@@ -207,7 +206,6 @@ public class ReadActivityTest {
     public void testIntentsLang() {
         //from ActivityA, click the button which starts the ActivityB
         onView(withId(R.id.lang)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
         onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
 
@@ -243,14 +241,14 @@ public class ReadActivityTest {
 
     @Test
     public void testReadingPane() {
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).check(matches(isDisplayed()));
         onView(withId(R.id.next)).check(matches(isDisplayed()));
         onView(withId(R.id.prev)).check(matches(isDisplayed()));
         onView(withId(R.id.play)).check(matches(isDisplayed()));
         onView(withId(R.id.play)).perform(click());
-        onView(withId(R.id.book_img_id)).perform(click());
+        onView(withId(R.id.book_img_id_read)).perform(click());
         onView(withId(R.id.next)).perform(click());
         onView(withId(R.id.prev)).perform(click());
         onView(withId(R.id.close)).perform(click());
@@ -259,19 +257,19 @@ public class ReadActivityTest {
     @Test
     public void TestPlay(){
         onView(withId(R.id.play)).perform(click());
-        onView(withId(R.id.book_img_id)).perform(click());
-        onView(withId(R.id.book_img_id)).check(matches(isDisplayed()));
+        onView(withId(R.id.book_img_id_read)).perform(click());
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
         onView(withId(R.id.close)).perform(click());
     }
 
     @Test
     public void TestLanguageIntents() {
         onView(withId(R.id.lang)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
-        onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        //onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
+        //onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
 
-        /*Intent intent = new Intent();
+        Intent intent = new Intent();
         intent.putExtra("Id", 1);
         intent.putExtra("Sound", "On");
         intent.putExtra("Section", 0);
@@ -289,7 +287,7 @@ public class ReadActivityTest {
         assertEquals(sound, "On");
         assertEquals(section, 0);
         assertEquals(language, "french");
-        assertEquals(bookmark, 1);*/
+        assertEquals(bookmark, 1);
     }
 
     @Test
