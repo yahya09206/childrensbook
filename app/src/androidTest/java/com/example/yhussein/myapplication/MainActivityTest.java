@@ -106,7 +106,7 @@ public class MainActivityTest {
     public void TestSoundChange(){
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
         onView(withId(R.id.son)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+        //onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);

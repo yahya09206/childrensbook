@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +52,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
     boolean running = false;
     private AppDatabase db;
     private ScrollView sc;
+    Switch sonSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,11 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         img = (ImageView) findViewById(R.id.book_img_id_read);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
         tvdescription.setMovementMethod(new ScrollingMovementMethod());
+        // initiate a Switch
+        sonSwitch = (Switch) findViewById(R.id.son);
+
+        // check current state of a Switch (true or false).
+        Boolean switchState = sonSwitch.isChecked();
 
         final Button close = findViewById(R.id.close);
 
@@ -93,7 +102,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             final Button pause = findViewById(R.id.pause);
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
-            final Spinner son = findViewById(R.id.son);
+            //final Spinner son = findViewById(R.id.son);
 
             final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
 
@@ -113,7 +122,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             next.setVisibility(View.VISIBLE);
             close.setVisibility(View.VISIBLE);
             lang.setVisibility(View.VISIBLE);
-            son.setVisibility(View.VISIBLE);
+            sonSwitch.setVisibility(View.VISIBLE);
 
             lang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -157,44 +166,54 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            son.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            // Set a checked change listener for switch button
+            sonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view,
-                                           int position, long id) {
-                    Object item = adapterView.getItemAtPosition(position);
-                    if (item != null) {
-                        String sound2 = item.toString();
-
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(sonSwitch.isChecked()){
                         List<State> sd = db.statesDao().getAllStates();
                         //update sound status
                         if (sd != null) {
-                            if(sound2.equals("Sound")) {
-                                return;
-                            }else{
-                                if(mp.isPlaying()) {
-                                    mp.stop();
-                                }
-                                sound = sound2;
-                                sd.get(0).setSoundStatus(sound);
-                                updateDatabase(sd.get(0));
-                                Toast.makeText(ReadActivity.this, "turning sound : " + sound,
-                                        Toast.LENGTH_SHORT).show();
+                            if(mp.isPlaying()) {
+                                mp.stop();
                             }
+                            sound = "On";
+                            sd.get(0).setSoundStatus(sound);
+                            updateDatabase(sd.get(0));
+                            Toast.makeText(ReadActivity.this, "turning sound : " + sound,
+                                    Toast.LENGTH_SHORT).show();
                         }
 
-                        Intent intent = new Intent(getApplicationContext(), ReadActivity.class);
-                        intent.putExtra("Id", id2);
-                        intent.putExtra("Sound", sound);
-                        intent.putExtra("Section", section);
-                        intent.putExtra("Language", language);
-                        intent.putExtra("Bookmark", bookmark);
-                        getApplication().startActivity(intent);
+                        Intent soundIntent = new Intent(getApplicationContext(), ReadActivity.class);
+                        soundIntent.putExtra("Id", id2);
+                        soundIntent.putExtra("Sound", sound);
+                        soundIntent.putExtra("Section", section);
+                        soundIntent.putExtra("Language", language);
+                        soundIntent.putExtra("Bookmark", bookmark);
+                        getApplication().startActivity(soundIntent);
                     }
-                }
+                    else {
+                        List<State> sd = db.statesDao().getAllStates();
+                        //update sound status
+                        if (sd != null) {
+                            if(mp.isPlaying()) {
+                                mp.stop();
+                            }
+                            sound = "Off";
+                            sd.get(0).setSoundStatus(sound);
+                            updateDatabase(sd.get(0));
+                            Toast.makeText(ReadActivity.this, "turning sound : " + sound,
+                                    Toast.LENGTH_SHORT).show();
+                        }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    // TODO Auto-generated method stub
+                        Intent soundIntent = new Intent(getApplicationContext(), ReadActivity.class);
+                        soundIntent.putExtra("Id", id2);
+                        soundIntent.putExtra("Sound", sound);
+                        soundIntent.putExtra("Section", section);
+                        soundIntent.putExtra("Language", language);
+                        soundIntent.putExtra("Bookmark", bookmark);
+                        getApplication().startActivity(soundIntent);
+                    }
                 }
             });
 
@@ -223,7 +242,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     prev.setVisibility(View.VISIBLE);
                     close.setVisibility(View.VISIBLE);
                     lang.setVisibility(View.VISIBLE);
-                    son.setVisibility(View.VISIBLE);
+                    sonSwitch.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -235,7 +254,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                     pause.setVisibility(View.GONE);
                     lang.setVisibility(View.GONE);
                     close.setVisibility(View.GONE);
-                    son.setVisibility(View.GONE);
+                    sonSwitch.setVisibility(View.GONE);
                     tvdescription.setMovementMethod(new ScrollingMovementMethod());
 
                     if(sound.equals("On")) {
