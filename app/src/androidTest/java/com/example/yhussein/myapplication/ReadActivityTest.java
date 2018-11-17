@@ -51,6 +51,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.toPack
 @RunWith(AndroidJUnit4.class)
 public class ReadActivityTest {
 
+    private static Intent intent;
+
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule =
             new IntentsTestRule<>(MainActivity.class);
@@ -63,16 +65,33 @@ public class ReadActivityTest {
             = new ActivityTestRule<ReadActivity>(ReadActivity.class) {
         @Override
         protected Intent getActivityIntent() {
-            Intent intent = new Intent();
+            intent = new Intent();
             intent.putExtra("Id", 1);
             intent.putExtra("Sound", "On");
             intent.putExtra("Section", 0);
             intent.putExtra("Language", "english");
             intent.putExtra("Bookmark", 1);
-
             return intent;
         }
     };
+
+    @Test
+    public void TestBundleLang(){
+        onView(withId(R.id.lang)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        Bundle b = intent.getExtras();
+        String language = b.getString("Language");
+        assertEquals(language, "english");
+    }
+
+    @Test
+    public void TestBundleSound(){
+        onView(withId(R.id.son)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        Bundle b = intent.getExtras();
+        String language = b.getString("Sound");
+        assertEquals(language, "On");
+    }
 
     @Test
     public void TestNextChange(){
@@ -266,8 +285,6 @@ public class ReadActivityTest {
     public void TestLanguageIntents() {
         onView(withId(R.id.lang)).perform(click());
         onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
-        //onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
-        //onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
@@ -293,11 +310,8 @@ public class ReadActivityTest {
     @Test
     public void TestSoundIntents() {
         onView(withId(R.id.son)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("On"))).perform(click());
-        onView(withId(R.id.son)).check(matches(withSpinnerText(containsString("On"))));
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
 
-                /*
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
         intent.putExtra("Sound", "On");
@@ -317,7 +331,6 @@ public class ReadActivityTest {
         assertEquals(section, 0);
         assertEquals(language, "french");
         assertEquals(bookmark, 1);
-        */
     }
 
     @Test
