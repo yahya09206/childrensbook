@@ -127,7 +127,6 @@ public class ReadActivityTest {
     @Test
     public void TestPlayChange(){
         onView(withId(R.id.book_img_id_read)).perform(click());
-        //onView(withId(R.id.play)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
@@ -140,7 +139,23 @@ public class ReadActivityTest {
                 new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
+    }
 
+    @Test
+    public void TestsOUNDoFF(){
+        onView(withId(R.id.son)).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "Off");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -158,7 +173,6 @@ public class ReadActivityTest {
                 new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
 
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
-
     }
 
     @Test
@@ -211,34 +225,6 @@ public class ReadActivityTest {
                 hasExtra("Bookmark", 1)
         ));
     }
-
-    /*@Test
-    public void testIntentsSoundOff() {
-        //from ActivityA, click the button which starts the ActivityB
-        onView(withId(R.id.son)).perform(click());
-
-        //validate intent and check its data
-        intended(allOf(
-                toPackage("com.example.yhussein.myapplication"),
-                hasExtra("Sound", "On")
-        ));
-        intended(allOf(
-                toPackage("com.example.yhussein.myapplication"),
-                hasExtra("Language", "english")
-        ));
-        intended(allOf(
-                toPackage("com.example.yhussein.myapplication"),
-                hasExtra("Id", 1)
-        ));
-        intended(allOf(
-                toPackage("com.example.yhussein.myapplication"),
-                hasExtra("Section", 0)
-        ));
-        intended(allOf(
-                toPackage("com.example.yhussein.myapplication"),
-                hasExtra("Bookmark", 1)
-        ));
-    }*/
 
     @Test
     public void testIntentsLang() {
