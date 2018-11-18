@@ -79,7 +79,6 @@ public class ReadActivityTest {
     @Test
     public void TestBundleSound(){
         onView(withId(R.id.son)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
         Bundle b = intent.getExtras();
         String language = b.getString("Sound");
         assertEquals(language, "On");
@@ -186,11 +185,9 @@ public class ReadActivityTest {
     }
 
     @Test
-    public void testIntentsSound() {
+    public void testIntentsSoundOn() {
         //from ActivityA, click the button which starts the ActivityB
         onView(withId(R.id.son)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)), is("On"))).perform(click());
-        //onView(withId(R.id.son)).check(matches(withSpinnerText(containsString("On"))));
 
         //validate intent and check its data
         intended(allOf(
@@ -216,11 +213,38 @@ public class ReadActivityTest {
     }
 
     @Test
+    public void testIntentsSoundOff() {
+        //from ActivityA, click the button which starts the ActivityB
+        onView(withId(R.id.son)).perform(click());
+
+        //validate intent and check its data
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Sound", "Off")
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Language", "english")
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Id", 1)
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Section", 0)
+        ));
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasExtra("Bookmark", 1)
+        ));
+    }
+
+    @Test
     public void testIntentsLang() {
         //from ActivityA, click the button which starts the ActivityB
         onView(withId(R.id.lang)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
-        //onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
+        onData(allOf(is(instanceOf(String.class)), is("english"))).perform(click());
 
         //validate intent and check its data
         intended(allOf(

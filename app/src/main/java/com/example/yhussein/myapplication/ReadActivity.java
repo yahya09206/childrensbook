@@ -166,11 +166,15 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
+            //final List<State> sd1 = db.statesDao().getAllStates();
             // Set a checked change listener for switch button
             sonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(sonSwitch.isChecked()){
+                    if(isChecked){
+                        if("On".equals(sound)){
+                            return;
+                        }
                         List<State> sd = db.statesDao().getAllStates();
                         //update sound status
                         if (sd != null) {
@@ -191,8 +195,10 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                         soundIntent.putExtra("Language", language);
                         soundIntent.putExtra("Bookmark", bookmark);
                         getApplication().startActivity(soundIntent);
-                    }
-                    else {
+                    }else{
+                        if("Off".equals(sound)){
+                            return;
+                        }
                         List<State> sd = db.statesDao().getAllStates();
                         //update sound status
                         if (sd != null) {
