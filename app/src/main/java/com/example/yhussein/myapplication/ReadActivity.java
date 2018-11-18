@@ -67,7 +67,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         sonSwitch = (Switch) findViewById(R.id.son);
 
         // check current state of a Switch (true or false).
-        Boolean switchState = sonSwitch.isChecked();
+        //Boolean switchState = sonSwitch.isChecked();
 
         final Button close = findViewById(R.id.close);
 
@@ -172,9 +172,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
-                        if("On".equals(sound)){
-                            return;
-                        }
                         List<State> sd = db.statesDao().getAllStates();
                         //update sound status
                         if (sd != null) {
@@ -196,9 +193,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                         soundIntent.putExtra("Bookmark", bookmark);
                         getApplication().startActivity(soundIntent);
                     }else{
-                        if("Off".equals(sound)){
-                            return;
-                        }
                         List<State> sd = db.statesDao().getAllStates();
                         //update sound status
                         if (sd != null) {

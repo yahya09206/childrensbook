@@ -66,9 +66,9 @@ public class MainActivityTest {
     @Test
     public void TestLibrary(){
         onView(withIndex(withId(R.id.book_title_id), 0))
-                .check(matches(withText("Great Book Title 1")));
+                .check(matches(withText("Cinderalla")));
         onView(withIndex(withId(R.id.book_author_id), 0))
-                .check(matches(withText("by Mekone Tolrom")));
+                .check(matches(withText("by An Old Folk Tale")));
         onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
     }
 
