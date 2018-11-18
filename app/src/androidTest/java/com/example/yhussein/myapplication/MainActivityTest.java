@@ -66,9 +66,9 @@ public class MainActivityTest {
     @Test
     public void TestLibrary(){
         onView(withIndex(withId(R.id.book_title_id), 0))
-                .check(matches(withText("Great Book Title 1")));
+                .check(matches(withText("Cinderalla")));
         onView(withIndex(withId(R.id.book_author_id), 0))
-                .check(matches(withText("by Mekone Tolrom")));
+                .check(matches(withText("by An Old Folk Tale")));
         onView(withIndex(withId(R.id.book_title_id), 0)).check(matches(isDisplayed()));
     }
 
@@ -103,10 +103,28 @@ public class MainActivityTest {
     }
 
     @Test
-    public void TestSoundChange(){
+    public void TestSoundChangeOn(){
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
         onView(withId(R.id.son)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+
+        Intent intent = new Intent();
+        intent.putExtra("Id", 1);
+        intent.putExtra("Sound", "On");
+        intent.putExtra("Section", 0);
+        intent.putExtra("Language", "english");
+        intent.putExtra("Bookmark", 1);
+
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
+
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void TestSoundChangeOff(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        onView(withId(R.id.son)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
@@ -163,7 +181,7 @@ public class MainActivityTest {
     @Test
     public void TestPlayChange(){
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        onView(withIndex(withId(R.id.play), 0)).perform(click());
+        //onView(withIndex(withId(R.id.play), 0)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
