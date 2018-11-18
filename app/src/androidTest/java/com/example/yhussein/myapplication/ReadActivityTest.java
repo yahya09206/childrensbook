@@ -220,7 +220,7 @@ public class ReadActivityTest {
         //validate intent and check its data
         intended(allOf(
                 toPackage("com.example.yhussein.myapplication"),
-                hasExtra("Sound", "On")
+                hasExtra("Sound", "Off")
         ));
         intended(allOf(
                 toPackage("com.example.yhussein.myapplication"),

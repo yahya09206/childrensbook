@@ -130,7 +130,7 @@ public class MainActivityTest {
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
-        intent.putExtra("Sound", "Off");
+        intent.putExtra("Sound", "On");
         intent.putExtra("Section", 0);
         intent.putExtra("Language", "english");
         intent.putExtra("Bookmark", 1);

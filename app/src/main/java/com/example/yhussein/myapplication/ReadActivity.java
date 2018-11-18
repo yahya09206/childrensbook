@@ -53,6 +53,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
     private AppDatabase db;
     private ScrollView sc;
     Switch sonSwitch;
+    Boolean switchState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,12 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         sonSwitch = (Switch) findViewById(R.id.son);
 
         // check current state of a Switch (true or false).
-        //Boolean switchState = sonSwitch.isChecked();
+        //switchState = sonSwitch.isChecked();
+        if(sonSwitch.isChecked()){
+            sonSwitch.setChecked(true);
+        }else{
+            sonSwitch.setChecked(false);
+        }
 
         final Button close = findViewById(R.id.close);
 
@@ -102,7 +108,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             final Button pause = findViewById(R.id.pause);
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
-            //final Spinner son = findViewById(R.id.son);
 
             final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
 
@@ -166,53 +171,55 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            //final List<State> sd1 = db.statesDao().getAllStates();
+            final List<State> sd1 = db.statesDao().getAllStates();
             // Set a checked change listener for switch button
             sonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        List<State> sd = db.statesDao().getAllStates();
-                        //update sound status
-                        if (sd != null) {
-                            if(mp.isPlaying()) {
-                                mp.stop();
+                    if(buttonView.performClick()) {
+                        if (isChecked) {
+                            List<State> sd = db.statesDao().getAllStates();
+                            //update sound status
+                            if (sd != null) {
+                                if (mp.isPlaying()) {
+                                    mp.stop();
+                                }
+                                sound = "On";
+                                sd.get(0).setSoundStatus(sound);
+                                updateDatabase(sd.get(0));
+                                Toast.makeText(ReadActivity.this, "turning sound : " + sound,
+                                        Toast.LENGTH_SHORT).show();
                             }
-                            sound = "On";
-                            sd.get(0).setSoundStatus(sound);
-                            updateDatabase(sd.get(0));
-                            Toast.makeText(ReadActivity.this, "turning sound : " + sound,
-                                    Toast.LENGTH_SHORT).show();
-                        }
 
-                        Intent soundIntent = new Intent(getApplicationContext(), ReadActivity.class);
-                        soundIntent.putExtra("Id", id2);
-                        soundIntent.putExtra("Sound", sound);
-                        soundIntent.putExtra("Section", section);
-                        soundIntent.putExtra("Language", language);
-                        soundIntent.putExtra("Bookmark", bookmark);
-                        getApplication().startActivity(soundIntent);
-                    }else{
-                        List<State> sd = db.statesDao().getAllStates();
-                        //update sound status
-                        if (sd != null) {
-                            if(mp.isPlaying()) {
-                                mp.stop();
+                            Intent soundIntent = new Intent(getApplicationContext(), ReadActivity.class);
+                            soundIntent.putExtra("Id", id2);
+                            soundIntent.putExtra("Sound", sound);
+                            soundIntent.putExtra("Section", section);
+                            soundIntent.putExtra("Language", language);
+                            soundIntent.putExtra("Bookmark", bookmark);
+                            getApplication().startActivity(soundIntent);
+                        } else {
+                            List<State> sd = db.statesDao().getAllStates();
+                            //update sound status
+                            if (sd != null) {
+                                if (mp.isPlaying()) {
+                                    mp.stop();
+                                }
+                                sound = "Off";
+                                sd.get(0).setSoundStatus(sound);
+                                updateDatabase(sd.get(0));
+                                Toast.makeText(ReadActivity.this, "turning sound : " + sound,
+                                        Toast.LENGTH_SHORT).show();
                             }
-                            sound = "Off";
-                            sd.get(0).setSoundStatus(sound);
-                            updateDatabase(sd.get(0));
-                            Toast.makeText(ReadActivity.this, "turning sound : " + sound,
-                                    Toast.LENGTH_SHORT).show();
-                        }
 
-                        Intent soundIntent = new Intent(getApplicationContext(), ReadActivity.class);
-                        soundIntent.putExtra("Id", id2);
-                        soundIntent.putExtra("Sound", sound);
-                        soundIntent.putExtra("Section", section);
-                        soundIntent.putExtra("Language", language);
-                        soundIntent.putExtra("Bookmark", bookmark);
-                        getApplication().startActivity(soundIntent);
+                            Intent soundIntent = new Intent(getApplicationContext(), ReadActivity.class);
+                            soundIntent.putExtra("Id", id2);
+                            soundIntent.putExtra("Sound", sound);
+                            soundIntent.putExtra("Section", section);
+                            soundIntent.putExtra("Language", language);
+                            soundIntent.putExtra("Bookmark", bookmark);
+                            getApplication().startActivity(soundIntent);
+                        }
                     }
                 }
             });
