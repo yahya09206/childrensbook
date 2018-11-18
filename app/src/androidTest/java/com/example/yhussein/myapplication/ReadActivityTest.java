@@ -127,7 +127,7 @@ public class ReadActivityTest {
     @Test
     public void TestPlayChange(){
         onView(withId(R.id.book_img_id_read)).perform(click());
-        onView(withId(R.id.play)).perform(click());
+        //onView(withId(R.id.play)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
