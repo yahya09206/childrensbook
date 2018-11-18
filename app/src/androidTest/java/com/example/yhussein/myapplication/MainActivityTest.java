@@ -181,7 +181,7 @@ public class MainActivityTest {
     @Test
     public void TestPlayChange(){
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        onView(withIndex(withId(R.id.play), 0)).perform(click());
+        //onView(withIndex(withId(R.id.play), 0)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
