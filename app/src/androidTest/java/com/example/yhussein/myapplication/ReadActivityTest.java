@@ -124,7 +124,7 @@ public class ReadActivityTest {
 
     }
 
-    @Test
+    /*@Test
     public void TestPlayChange(){
         onView(withId(R.id.book_img_id_read)).perform(click());
         //onView(withId(R.id.play)).perform(click());
@@ -141,7 +141,7 @@ public class ReadActivityTest {
 
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
 
-    }
+    }*/
 
     @Test
     public void TestImagebutton(){
