@@ -80,8 +80,13 @@ public class ReadActivityTest {
         onView(withId(R.id.lang)).perform(click());
         onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
         Bundle b = intent.getExtras();
+
         String language = b.getString("Language");
+        String sound = b.getString("Sound");
+
         assertEquals(language, "english");
+        assertEquals(sound, "On");
+
         intended(hasComponent(ReadActivity.class.getName()));
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
     }
