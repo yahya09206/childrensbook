@@ -34,11 +34,6 @@
         <item>italian</item>
         <item>lithuanian</item>
     </string-array>
-    <string-array name="sounds_array">
-        <item>Sound</item>
-        <item>On</item>
-        <item>Off</item>
-    </string-array>
     <!-- Strings related to Settings -->
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

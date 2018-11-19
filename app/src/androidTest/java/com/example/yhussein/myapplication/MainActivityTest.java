@@ -36,6 +36,10 @@ import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -178,10 +182,19 @@ public class MainActivityTest {
 
     }
 
+
+    /*@Test
+    public void TestTargetActivityLaunch(){
+        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasComponent(ReadActivity.class.getName()
+        )));
+    }*/
+
     @Test
     public void TestPlayChange(){
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        //onView(withIndex(withId(R.id.play), 0)).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);

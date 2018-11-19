@@ -3,12 +3,19 @@ package com.example.yhussein.myapplication;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,6 +32,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.example.yhussein.myapplication.MainActivityTest.withIndex;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -42,6 +51,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.toPack
 public class ReadActivityTest {
 
     private static Intent intent;
+    private TextView tvdescription;
 
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule =
@@ -227,6 +237,15 @@ public class ReadActivityTest {
     }
 
     @Test
+    public void TestTargetActivityLaunch(){
+        onView(withIndex(withId(R.id.book_img_id_read), 0)).perform(click());
+        intended(allOf(
+                toPackage("com.example.yhussein.myapplication"),
+                hasComponent(ReadActivity.class.getName()
+                )));
+    }
+
+    @Test
     public void testIntentsLang() {
         //from ActivityA, click the button which starts the ActivityB
         onView(withId(R.id.lang)).perform(click());
@@ -278,11 +297,26 @@ public class ReadActivityTest {
     }
 
     @Test
-    public void TestPlay(){
+    public void TestMediaPlayer(){
         onView(withId(R.id.play)).perform(click());
+        Resources res = getApplicationContext().getResources();
+        String soundF = "audio1_1_english";
+        int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
+        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
+        mp.start();
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
+    }
+
+    @Test
+    public void TestImagecheck(){
         onView(withId(R.id.book_img_id_read)).perform(click());
-        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
-        onView(withId(R.id.close)).perform(click());
+        onView(withId(R.id.lang)).check(matches(isDisplayed()));
+        onView(withId(R.id.son)).check(matches(isDisplayed()));
+        onView(withId(R.id.next)).check(matches(isDisplayed()));
+        onView(withId(R.id.play)).check(matches(isDisplayed()));
+        onView(withId(R.id.prev)).check(matches(isDisplayed()));
+        onView(withId(R.id.txtDesc)).check(matches(withText(containsString(""))));
     }
 
     @Test
@@ -294,7 +328,7 @@ public class ReadActivityTest {
         intent.putExtra("Id", 1);
         intent.putExtra("Sound", "On");
         intent.putExtra("Section", 0);
-        intent.putExtra("Language", "french");
+        intent.putExtra("Language", "english");
         intent.putExtra("Bookmark", 1);
 
         //validate intent and check its data
@@ -307,14 +341,27 @@ public class ReadActivityTest {
         assertEquals(id, 1);
         assertEquals(sound, "On");
         assertEquals(section, 0);
-        assertEquals(language, "french");
+        assertEquals(language, "english");
         assertEquals(bookmark, 1);
+    }
+
+    public static <T> Matcher<T> withMyValue(final String name) {
+        return new BaseMatcher<T>() {
+            @Override
+            public boolean matches(Object item) {
+                return item.toString().equals(name);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        };
     }
 
     @Test
     public void TestSoundIntents() {
         onView(withId(R.id.son)).perform(click());
-        //onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
 
         Intent intent = new Intent();
         intent.putExtra("Id", 1);
