@@ -182,16 +182,6 @@ public class MainActivityTest {
 
     }
 
-
-    /*@Test
-    public void TestTargetActivityLaunch(){
-        onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());
-        intended(allOf(
-                toPackage("com.example.yhussein.myapplication"),
-                hasComponent(ReadActivity.class.getName()
-        )));
-    }*/
-
     @Test
     public void TestPlayChange(){
         onView(withIndex(withId(R.id.book_img_id), 0)).perform(click());

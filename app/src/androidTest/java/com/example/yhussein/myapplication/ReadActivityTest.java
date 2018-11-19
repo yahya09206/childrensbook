@@ -301,18 +301,6 @@ public class ReadActivityTest {
         onView(withId(R.id.close)).perform(click());
     }
 
-    /*@Test
-    public void TestMediaPlayer(){
-        onView(withId(R.id.play)).perform(click());
-        Resources res = getApplicationContext().getResources();
-        String soundF = "audio1_1_english";
-        int soundId = res.getIdentifier(soundF, "raw", getApplicationContext().getPackageName());
-        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
-        mp.start();
-        Instrumentation.ActivityResult result =
-                new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
-    }*/
-
     @Test
     public void TestImagecheck(){
         onView(withId(R.id.book_img_id_read)).perform(click());
