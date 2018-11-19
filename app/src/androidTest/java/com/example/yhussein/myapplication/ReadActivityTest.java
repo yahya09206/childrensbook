@@ -296,7 +296,7 @@ public class ReadActivityTest {
         onView(withId(R.id.close)).perform(click());
     }
 
-    @Test
+    /*@Test
     public void TestMediaPlayer(){
         onView(withId(R.id.play)).perform(click());
         Resources res = getApplicationContext().getResources();
@@ -306,7 +306,7 @@ public class ReadActivityTest {
         mp.start();
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(ReadActivity.RESULT_OK, intent);
-    }
+    }*/
 
     @Test
     public void TestImagecheck(){
