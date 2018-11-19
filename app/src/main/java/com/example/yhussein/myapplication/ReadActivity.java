@@ -67,9 +67,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         // initiate a Switch
         sonSwitch = (Switch) findViewById(R.id.son);
 
-        // check current state of a Switch (true or false).
-        //switchState = sonSwitch.isChecked();
-
         final Button close = findViewById(R.id.close);
 
         // Receive data
@@ -172,7 +169,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            //final List<State> sd1 = db.statesDao().getAllStates();
             // Set a checked change listener for switch button
             sonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
