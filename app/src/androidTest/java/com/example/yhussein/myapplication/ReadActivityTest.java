@@ -29,6 +29,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
@@ -40,6 +41,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 
 import static android.support.test.espresso.intent.Intents.intended;
@@ -284,6 +286,15 @@ public class ReadActivityTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.example.yhussein.myapplication", appContext.getPackageName());
+    }
+
+    @Test
+    public void TestReadToast(){
+        onView(withId(R.id.lang)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        onView(withText("english"))
+                .inRoot(withDecorView(not(activityTestRule.getActivity().getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
     }
 
     @Test
