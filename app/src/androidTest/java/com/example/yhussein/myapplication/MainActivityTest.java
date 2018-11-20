@@ -68,13 +68,6 @@ public class MainActivityTest {
     }
 
     @Test
-    public void TestToast(){
-        onView(withText("Welcome back! You have 2 books!"))
-                .inRoot(withDecorView(not(activityTestRule.getActivity().getWindow().getDecorView())))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
     public void TestLibrary(){
         onView(withIndex(withId(R.id.book_title_id), 0))
                 .check(matches(withText("Cinderalla")));

@@ -11,6 +11,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.method.ScrollingMovementMethod;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.hamcrest.BaseMatcher;
@@ -36,6 +37,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.example.yhussein.myapplication.MainActivityTest.withIndex;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -289,12 +291,10 @@ public class ReadActivityTest {
     }
 
     @Test
-    public void TestReadToast(){
+    public void TestDropDown(){
         onView(withId(R.id.lang)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
-        onView(withText("english"))
-                .inRoot(withDecorView(not(activityTestRule.getActivity().getWindow().getDecorView())))
-                .check(matches(isDisplayed()));
+        onData(anything()).atPosition(1).perform(click());
+        onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
     }
 
     @Test
