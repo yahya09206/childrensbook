@@ -11,6 +11,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.method.ScrollingMovementMethod;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.hamcrest.BaseMatcher;
@@ -29,17 +30,20 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.example.yhussein.myapplication.MainActivityTest.withIndex;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 
 import static android.support.test.espresso.intent.Intents.intended;
@@ -284,6 +288,13 @@ public class ReadActivityTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.example.yhussein.myapplication", appContext.getPackageName());
+    }
+
+    @Test
+    public void TestDropDown(){
+        onView(withId(R.id.lang)).perform(click());
+        onData(anything()).atPosition(1).perform(click());
+        onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
     }
 
     @Test
