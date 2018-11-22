@@ -298,6 +298,15 @@ public class ReadActivityTest {
     }
 
     @Test
+    public void checkTextView_isDisplayed_and_notEmpty() throws Exception {
+        // perform a click on the button
+        onView(withId(R.id.next)).perform(click());
+
+        // passes if the textView does not match the empty string
+        onView(withId(R.id.txtDesc)).check(matches(withText("")));
+    }
+
+    @Test
     public void testReadingPane() {
         onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
         onView(withId(R.id.lang)).check(matches(isDisplayed()));
