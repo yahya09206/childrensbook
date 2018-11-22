@@ -1,6 +1,7 @@
 package com.example.yhussein.myapplication;
 
 import android.app.Instrumentation;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith;
 
 import androidx.test.filters.LargeTest;
 
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -286,7 +288,7 @@ public class ReadActivityTest {
     @Test
     public void useAppContext() {
         // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = getTargetContext();
         assertEquals("com.example.yhussein.myapplication", appContext.getPackageName());
     }
 
@@ -295,6 +297,22 @@ public class ReadActivityTest {
         onView(withId(R.id.lang)).perform(click());
         onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.lang)).check(matches(withSpinnerText(containsString("english"))));
+    }
+
+    @Test
+    public void checkTextView_isDisplayed_and_notEmpty() throws Exception {
+        // perform a click on the button
+        onView(withId(R.id.next)).perform(click());
+
+        // passes if the textView does not match the empty string
+        onView(withId(R.id.txtDesc)).check(matches(withText("")));
+        onView(withId(R.id.book_img_id_read)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void TestNextAction(){
+        onView(withId(R.id.next)).perform(click());
+        intended(hasComponent(new ComponentName(getTargetContext(), ReadActivity.class)));
     }
 
     @Test
