@@ -334,6 +334,7 @@ public class ReadActivityTest {
         onView(withId(R.id.lang)).perform(setTextViewVisibitity(false));
         onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
         */
+        //ok
     }
 
     private static ViewAction setTextViewVisibitity(final boolean value) {
