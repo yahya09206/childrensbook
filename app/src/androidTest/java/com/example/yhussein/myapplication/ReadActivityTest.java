@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.method.ScrollingMovementMethod;
@@ -34,6 +35,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -317,18 +319,12 @@ public class ReadActivityTest {
 
     @Test
     public void TestImpossible(){
-        State state = new State();
-        state.setSoundStatus("On");
-        state.setReaderLanguage(null);
-        state.setReaderIp("");
-        state.setStateId(1);
-        state.setBookMark(0);
-
-        Assert.assertThat(1, equalTo(state.getStateId()));
-        Assert.assertThat("On", equalTo(state.getSoundStatus()));
-        //Assert.assertThat("french", equalTo(state.getReaderLanguage()));
-        Assert.assertThat("", equalTo(state.getReaderIp()));
-        Assert.assertThat(0, equalTo(state.getBookMark()));
+        onView(withId(R.id.play)).perform(click());
+        onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
