@@ -8,11 +8,14 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,6 +37,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -319,12 +323,37 @@ public class ReadActivityTest {
 
     @Test
     public void TestImpossible(){
-        onView(withId(R.id.play)).perform(click());
-        onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        //onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.play)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.next)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.prev)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        /*onView(withId(R.id.son)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.lang)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        */
+    }
+
+    private static ViewAction setTextViewVisibitity(final boolean value) {
+        return new ViewAction() {
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return isAssignableFrom(TextView.class);
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.setVisibility(value ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Show / Hide View";
+            }
+        };
     }
 
     @Test
