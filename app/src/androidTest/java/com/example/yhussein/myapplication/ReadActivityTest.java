@@ -324,7 +324,7 @@ public class ReadActivityTest {
         onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        //onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
