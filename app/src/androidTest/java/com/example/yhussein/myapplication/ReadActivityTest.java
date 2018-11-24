@@ -317,28 +317,18 @@ public class ReadActivityTest {
 
     @Test
     public void TestImpossible(){
-        onView(withId(R.id.lang)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(0).perform(click());
+        State state = new State();
+        state.setSoundStatus("On");
+        state.setReaderLanguage(null);
+        state.setReaderIp("");
+        state.setStateId(1);
+        state.setBookMark(0);
 
-        Intent intent = new Intent();
-        intent.putExtra("Id", 1);
-        intent.putExtra("Sound", "On");
-        intent.putExtra("Section", 0);
-        intent.putExtra("Language", "Lang");
-        intent.putExtra("Bookmark", 1);
-
-        //validate intent and check its data
-        int id = intent.getExtras().getInt("Id");
-        String sound = intent.getExtras().getString("Sound");
-        int section = intent.getExtras().getInt("Section");
-        String language = intent.getExtras().getString("Language");
-        int bookmark = intent.getExtras().getInt("Bookmark");
-
-        assertEquals(id, 1);
-        assertEquals(sound, "On");
-        assertEquals(section, 0);
-        assertEquals(language, "Lang");
-        assertEquals(bookmark, 1);
+        Assert.assertThat(1, equalTo(state.getStateId()));
+        Assert.assertThat("On", equalTo(state.getSoundStatus()));
+        //Assert.assertThat("french", equalTo(state.getReaderLanguage()));
+        Assert.assertThat("", equalTo(state.getReaderIp()));
+        Assert.assertThat(0, equalTo(state.getBookMark()));
     }
 
     @Test
