@@ -16,7 +16,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.hamcrest.BaseMatcher;
@@ -323,19 +325,17 @@ public class ReadActivityTest {
 
     @Test
     public void TestImpossible(){
-        onView(withId(R.id.play)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.play)).perform(setButtonViewVisibitity(false));
         onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        /*onView(withId(R.id.next)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.next)).perform(setButtonViewVisibitity(false));
         onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.prev)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.prev)).perform(setButtonViewVisibitity(false));
         onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        */
-        /*onView(withId(R.id.son)).perform(setTextViewVisibitity(false));
+
+        onView(withId(R.id.son)).perform(setSwitchViewVisibitity(false));
         onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.lang)).perform(setTextViewVisibitity(false));
+        onView(withId(R.id.lang)).perform(setSpinnerViewVisibitity(false));
         onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        */
-        //ok
     }
 
     private static ViewAction setTextViewVisibitity(final boolean value) {
@@ -344,6 +344,66 @@ public class ReadActivityTest {
             @Override
             public Matcher<View> getConstraints() {
                 return isAssignableFrom(TextView.class);
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.setVisibility(value ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Show / Hide View";
+            }
+        };
+    }
+
+    private static ViewAction setButtonViewVisibitity(final boolean value) {
+        return new ViewAction() {
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return isAssignableFrom(Button.class);
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.setVisibility(value ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Show / Hide View";
+            }
+        };
+    }
+
+    private static ViewAction setSpinnerViewVisibitity(final boolean value) {
+        return new ViewAction() {
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return isAssignableFrom(Spinner.class);
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.setVisibility(value ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public String getDescription() {
+                return "Show / Hide View";
+            }
+        };
+    }
+
+    private static ViewAction setSwitchViewVisibitity(final boolean value) {
+        return new ViewAction() {
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return isAssignableFrom(Switch.class);
             }
 
             @Override
