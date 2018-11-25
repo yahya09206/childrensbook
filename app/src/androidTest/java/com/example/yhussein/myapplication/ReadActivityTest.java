@@ -325,17 +325,19 @@ public class ReadActivityTest {
 
     @Test
     public void TestImpossible(){
-        onView(withId(R.id.play)).perform(setButtonViewVisibitity(false));
-        onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.next)).perform(setButtonViewVisibitity(false));
-        onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.prev)).perform(setButtonViewVisibitity(false));
-        onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.play)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.son)).perform(setSwitchViewVisibitity(false));
-        onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.lang)).perform(setSpinnerViewVisibitity(false));
-        onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        //onView(withId(R.id.play)).perform(setButtonViewVisibitity(false));
+        onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        //onView(withId(R.id.next)).perform(setButtonViewVisibitity(false));
+        onView(withId(R.id.next)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        //onView(withId(R.id.prev)).perform(setButtonViewVisibitity(false));
+        onView(withId(R.id.prev)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        //onView(withId(R.id.son)).perform(setSwitchViewVisibitity(false));
+        onView(withId(R.id.son)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        //onView(withId(R.id.lang)).perform(setSpinnerViewVisibitity(false));
+        onView(withId(R.id.lang)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     private static ViewAction setTextViewVisibitity(final boolean value) {
