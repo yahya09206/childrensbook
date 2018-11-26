@@ -63,7 +63,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
 
         img = (ImageView) findViewById(R.id.book_img_id_read);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
-        tvdescription.setMovementMethod(new ScrollingMovementMethod());
         // initiate a Switch
         sonSwitch = (Switch) findViewById(R.id.son);
 
@@ -82,7 +81,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         if(sound.equals("On")){
             sonSwitch.setChecked(true);
-            //sonSwitch.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         }else{
             sonSwitch.setChecked(false);
         }
@@ -106,6 +104,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             final Button pause = findViewById(R.id.pause);
             final Button next = findViewById(R.id.next);
             final Spinner lang = findViewById(R.id.lang);
+            sc = findViewById(R.id.SCROLLER_ID);
 
             final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), soundId);
 
@@ -113,6 +112,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
                 //set image and text values
                 img.setImageResource(pixId);
                 tvdescription.setText("[" + bookmark + "/" + st.size() + " - " + language + "] " + paragraphs.get(bookmark));
+                tvdescription.setMovementMethod(new ScrollingMovementMethod());
             }
 
             if(sound.equals("On")) {
@@ -336,6 +336,17 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         }catch (Exception ex){
             Toast.makeText(getApplicationContext(), "rec=" + paragraphs.size(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void scrollToBottom()
+    {
+        sc.post(new Runnable()
+        {
+            public void run()
+            {
+                sc.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     // Catch touch events here
