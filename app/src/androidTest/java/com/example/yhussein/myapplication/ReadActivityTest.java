@@ -326,7 +326,7 @@ public class ReadActivityTest {
     @Test
     public void TestImpossible(){
         onView(withId(R.id.play)).check(matches(isDisplayed()));
-//
+
         //onView(withId(R.id.play)).perform(setButtonViewVisibitity(false));
         onView(withId(R.id.play)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         //onView(withId(R.id.next)).perform(setButtonViewVisibitity(false));
