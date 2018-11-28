@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.yhussein.myapplication.ReadActivity"
-    android:background="#fcfcfc">
+    android:background="#fcfcfc"
+    android:orientation="vertical">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
