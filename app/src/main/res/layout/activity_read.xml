@@ -103,7 +103,6 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_skip_previous_black_24dp"
                         android:text="PREVIOUS"
                         android:textColor="?attr/colorPrimary" />
@@ -113,7 +112,6 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_play_circle_outline_black_24dp"
                         android:text="PLAY"
                         android:textColor="?attr/colorPrimary" />
@@ -123,7 +121,6 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_pause_circle_outline_black_24dp"
                         android:text="PAUSE"
                         android:textColor="?attr/colorPrimary" />
@@ -133,7 +130,6 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:drawableTop="@drawable/ic_skip_next_black_24dp"
                         android:text="NEXT"
                         android:textColor="?attr/colorPrimary" />
@@ -141,13 +137,15 @@
 
             </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/txtDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:scrollbars = "vertical">
-            </TextView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/txtDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                </TextView>
+
+            </ScrollView>
 </LinearLayout>
