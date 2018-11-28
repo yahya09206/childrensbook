@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ReadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener  {
+public class ReadActivity extends AppCompatActivity {
 
     private TextView tvdescription;
     private ImageView img;
@@ -63,7 +63,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
 
         img = (ImageView) findViewById(R.id.book_img_id_read);
         tvdescription = (TextView) findViewById(R.id.txtDesc);
-        tvdescription.setMovementMethod(new ScrollingMovementMethod());
         // initiate a Switch
         sonSwitch = (Switch) findViewById(R.id.son);
 
@@ -112,7 +111,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
             if (st.size() > 0) {
                 //set image and text values
                 img.setImageResource(pixId);
-                tvdescription.setText("[" + bookmark + "/" + st.size() + " - " + language + "] " + paragraphs.get(bookmark));
+                tvdescription.setText("[" + bookmark + "/" + st.size() + " - " + language + "] " + paragraphs.get(bookmark) + paragraphs.get(bookmark) + paragraphs.get(bookmark));
             }
 
             if(sound.equals("On")) {
@@ -338,20 +337,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    // Catch touch events here
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            //
-        }
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            //System.out.println("Touch Up X:" + event.getX() + " Y:" + event.getY());
-        }
-        return super.onTouchEvent(event);
-    }
-
-    public static List<String> getContent(Context context, String filePath)
-    {
+    public static List<String> getContent(Context context, String filePath) {
         List<String> paragraphs = new ArrayList<>();
         AssetManager mgr = context.getAssets();
         BufferedReader reader = null;
@@ -383,11 +369,6 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         return paragraphs;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
     /****************STATE**********************/
     //update
     public void updateDatabase(State state) {
@@ -399,7 +380,7 @@ public class ReadActivity extends AppCompatActivity implements AdapterView.OnIte
         private WeakReference<Activity> weakActivity;
         private State state;
 
-        public UpdateStateTask(Activity activity, State state) {
+        UpdateStateTask(Activity activity, State state) {
             weakActivity = new WeakReference<>(activity);
             this.state = state;
         }
